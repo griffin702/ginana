@@ -1,0 +1,53 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "基于gin的api服务，默认端口：8000",
+        "title": "GiNana",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0"
+        },
+        "version": "1.0.1"
+    },
+    "host": "127.0.0.1:8000",
+    "basePath": "/api",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "测试",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Public"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

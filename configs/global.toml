@@ -1,0 +1,11 @@
+# Global 全局配置
+
+appName = "GiNana"
+
+version = "1.0.0"
+
+configIsLocal = true
+
+configPath = "../configs"
+
+cacheExpire = "24h"

@@ -1,0 +1,35 @@
+basePath: /api
+host: 127.0.0.1:8000
+info:
+  contact: {}
+  description: 基于gin的api服务，默认端口：8000
+  license:
+    name: Apache 2.0
+  title: GiNana
+  version: 1.0.1
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: 测试
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "500":
+          description: failed
+          schema:
+            type: string
+      tags:
+      - Public
+swagger: "2.0"
