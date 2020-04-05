@@ -4,7 +4,6 @@ import (
 	"ginana/internal/config"
 	"ginana/library/conf/paladin"
 	"ginana/library/log"
-	"ginana/library/mdw"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -26,19 +25,5 @@ func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error
 	if err != nil && err != http.ErrServerClosed {
 		log.Errorf(err.Error())
 	}
-	return
-}
-
-func NewGin() (e *gin.Engine) {
-	gin.SetMode(gin.ReleaseMode)
-	gin.DefaultWriter = log.GetOutFile()
-	e = gin.Default()
-	// Logger, Recovery
-	e.Use(mdw.Logger, mdw.Recovery)
-	// Cors
-	e.Use(mdw.CORS([]string{"*"}))
-	// Swagger
-	handle := mdw.SwaggerHandler("http://127.0.0.1:8000/swagger/doc.json")
-	e.GET("/swagger/*any", handle)
 	return
 }

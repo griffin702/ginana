@@ -10,6 +10,7 @@ import (
 	"ginana/internal/db"
 	"ginana/internal/server/http"
 	"ginana/internal/server/http/h_user"
+	"ginana/internal/server/http/router"
 	"ginana/internal/service"
 	"ginana/internal/service/user"
 	"github.com/google/wire"
@@ -39,7 +40,7 @@ func InitApp() (*App, func(), error) {
 		return nil, nil, err
 	}
 	hUser := h_user.New(serviceService)
-	engine := http.InitRouter(hUser)
+	engine := router.InitRouter(hUser)
 	server, err := http.NewHttpServer(engine, configConfig)
 	if err != nil {
 		return nil, nil, err
@@ -61,4 +62,4 @@ var iProvider = wire.NewSet(user.New)
 
 var hProvider = wire.NewSet(h_user.New)
 
-var httpProvider = wire.NewSet(http.InitRouter, http.NewHttpServer)
+var httpProvider = wire.NewSet(router.InitRouter, http.NewHttpServer)
