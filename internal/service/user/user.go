@@ -51,3 +51,11 @@ func (s *SUser) SetEnforcer(ef *casbin.SyncedEnforcer) (err error) {
 	s.ef = ef
 	return
 }
+
+func (s *SUser) GetAllRoles(ctx context.Context) (roles []database.CasbinRole, err error) {
+	return
+}
+
+func (s *SUser) GetAllUsers(ctx context.Context) (roles []database.CasbinUser, err error) {
+	return
+}

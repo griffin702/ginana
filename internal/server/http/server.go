@@ -2,18 +2,21 @@ package http
 
 import (
 	"ginana/internal/config"
-	"ginana/internal/service"
+	"ginana/internal/server/http/h_user"
 	"ginana/library/conf/paladin"
 	"ginana/library/log"
-	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
 )
 
-var (
-	svc *service.Service
-)
+func NewGin(u *h_user.HUser) (e *gin.Engine, err error) {
+	gin.SetMode(gin.ReleaseMode)
+	gin.DefaultWriter = log.GetOutFile()
+	e = gin.Default()
+	InitRouter(e, u)
+	return
+}
 
 func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error) {
 	if err = paladin.Get("http.toml").UnmarshalTOML(cfg); err != nil {
@@ -31,14 +34,5 @@ func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error
 	if err != nil && err != http.ErrServerClosed {
 		log.Errorf(err.Error())
 	}
-	return
-}
-
-func NewGin(s *service.Service, ef *casbin.SyncedEnforcer) (e *gin.Engine, err error) {
-	svc = s
-	gin.SetMode(gin.ReleaseMode)
-	gin.DefaultWriter = log.GetOutFile()
-	e = gin.Default()
-	InitRouter(e)
 	return
 }

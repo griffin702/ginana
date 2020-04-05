@@ -1,15 +1,22 @@
-package http
+package h_user
 
 import (
+	"ginana/internal/model"
+	"ginana/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
-// BlogGin hello BlogGin.
-type GiNana struct {
-	Hello string
+type HUser struct {
+	svc *service.Service
 }
 
-// howToStart godoc
+func New(s *service.Service) *HUser {
+	return &HUser{
+		svc: s,
+	}
+}
+
+// GetUsers godoc
 // @Description 测试
 // @Tags Public
 // @Accept  json
@@ -18,8 +25,8 @@ type GiNana struct {
 // @Success 200 {string} string "ok"
 // @Failure 500 {string} string "failed"
 // @Router / [get]
-func howToStart(ctx *gin.Context) {
-	k := &GiNana{
+func (h *HUser) GetUsers(ctx *gin.Context) {
+	k := &model.GiNana{
 		Hello: "GiNana Server",
 	}
 	ctx.JSON(200, k)

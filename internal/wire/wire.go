@@ -7,22 +7,24 @@ import (
 	"ginana/internal/config"
 	"ginana/internal/db"
 	"ginana/internal/server/http"
+	"ginana/internal/server/http/h_user"
 	"ginana/internal/service"
 	"ginana/internal/service/user"
 	"github.com/google/wire"
 )
 
-var initProvider = wire.NewSet(config.NewConfig, db.NewDB)
-var serviceProvider = wire.NewSet(user.New)
+var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewCasbin)
+var iProvider = wire.NewSet(user.New)
+var hProvider = wire.NewSet(h_user.New)
+var httpProvider = wire.NewSet(http.NewGin, http.NewHttpServer)
 
 func InitApp() (*App, func(), error) {
 	panic(wire.Build(
 		initProvider,
-		serviceProvider,
+		iProvider,
 		service.New,
-		http.NewGin,
-		http.NewHttpServer,
-		db.NewCasbin,
+		hProvider,
+		httpProvider,
 		NewApp,
 	))
 }

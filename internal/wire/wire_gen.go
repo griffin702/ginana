@@ -9,6 +9,7 @@ import (
 	"ginana/internal/config"
 	"ginana/internal/db"
 	"ginana/internal/server/http"
+	"ginana/internal/server/http/h_user"
 	"ginana/internal/service"
 	"ginana/internal/service/user"
 	"github.com/google/wire"
@@ -29,15 +30,16 @@ func InitApp() (*App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	serviceService, err := service.New(gormDB, iUser)
-	if err != nil {
-		return nil, nil, err
-	}
 	syncedEnforcer, err := db.NewCasbin(iUser, configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	engine, err := http.NewGin(serviceService, syncedEnforcer)
+	serviceService, err := service.New(gormDB, syncedEnforcer, iUser)
+	if err != nil {
+		return nil, nil, err
+	}
+	hUser := h_user.New(serviceService)
+	engine, err := http.NewGin(hUser)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -56,6 +58,10 @@ func InitApp() (*App, func(), error) {
 
 // wire.go:
 
-var initProvider = wire.NewSet(config.NewConfig, db.NewDB)
+var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewCasbin)
 
-var serviceProvider = wire.NewSet(user.New)
+var iProvider = wire.NewSet(user.New)
+
+var hProvider = wire.NewSet(h_user.New)
+
+var httpProvider = wire.NewSet(http.NewGin, http.NewHttpServer)

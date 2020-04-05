@@ -21,7 +21,6 @@ func NewCasbin(user user.IUser, cfg *config.Config) (ef *casbin.SyncedEnforcer, 
 	if err != nil {
 		return
 	}
-	err = user.SetEnforcer(ef)
 	go WatchCasbinModel(ef, cfg.Casbin)
 	go WatchCasbinConfig(ef, cfg.Casbin, key)
 	return
