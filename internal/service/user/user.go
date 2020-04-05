@@ -24,7 +24,7 @@ type SUser struct {
 	ef   *casbin.SyncedEnforcer
 	cfg  *config.Config
 	tool *tools.Tool
-	//mc              *memcache.Memcache
+	//mc          *memcache.Memcache
 	cacheExpire int32
 	errHelper   *map[int]string
 }
