@@ -10,12 +10,12 @@ import (
 	"ginana/internal/server/http/h_user"
 	"ginana/internal/server/http/router"
 	"ginana/internal/service"
-	"ginana/internal/service/user"
+	"ginana/internal/service/i_user"
 	"github.com/google/wire"
 )
 
 var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewCasbin)
-var iProvider = wire.NewSet(user.New)
+var iProvider = wire.NewSet(i_user.New)
 var hProvider = wire.NewSet(h_user.New)
 var httpProvider = wire.NewSet(router.InitRouter, http.NewHttpServer)
 
