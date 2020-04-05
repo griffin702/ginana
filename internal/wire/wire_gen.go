@@ -10,6 +10,7 @@ import (
 	"ginana/internal/db"
 	"ginana/internal/server/http"
 	"ginana/internal/service"
+	"ginana/internal/service/user"
 	"github.com/google/wire"
 )
 
@@ -24,11 +25,15 @@ func InitApp() (*App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	serviceService, err := service.New(gormDB, configConfig)
+	iUser, err := user.New(gormDB, configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	syncedEnforcer, err := db.NewCasbin(serviceService, configConfig)
+	serviceService, err := service.New(gormDB, iUser)
+	if err != nil {
+		return nil, nil, err
+	}
+	syncedEnforcer, err := db.NewCasbin(iUser, configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -51,4 +56,6 @@ func InitApp() (*App, func(), error) {
 
 // wire.go:
 
-var serviceProvider = wire.NewSet(config.NewConfig, db.NewDB, service.New)
+var initProvider = wire.NewSet(config.NewConfig, db.NewDB)
+
+var serviceProvider = wire.NewSet(user.New)

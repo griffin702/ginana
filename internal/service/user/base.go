@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	"context"
@@ -12,42 +12,36 @@ import (
 )
 
 // Service service interface
-type Service interface {
-	Close()
+type IUser interface {
 	SetEnforcer(ef *casbin.SyncedEnforcer) (err error)
 	GetAllRoles(ctx context.Context) (roles []database.CasbinRole, err error)
 	GetAllUsers(ctx context.Context) (roles []database.CasbinUser, err error)
 }
 
 // Service service
-type service struct {
-	db              *gorm.DB
-	ef              *casbin.SyncedEnforcer
-	cfg             *config.Config
-	tool            *tools.Tool
+type SUser struct {
+	db   *gorm.DB
+	ef   *casbin.SyncedEnforcer
+	cfg  *config.Config
+	tool *tools.Tool
 	//mc              *memcache.Memcache
-	cacheExpire     int32
-	errHelper       *map[int]string
+	cacheExpire int32
+	errHelper   *map[int]string
 }
 
 // New new a service and return
-func New(db *gorm.DB, cfg *config.Config) (s Service, err error) {
-	s = &service{
-		db: db,
-		cfg: cfg,
-		tool: tools.New(),
+func New(db *gorm.DB, cfg *config.Config) (s IUser, err error) {
+	s = &SUser{
+		db:          db,
+		cfg:         cfg,
+		tool:        tools.New(),
 		cacheExpire: int32(time.Duration(cfg.CacheExpire) / time.Second),
 	}
 	return
 }
 
 // Close close the resource.
-func (s *service) Close() {
-	_ = s.db.Close()
-}
-
-// Close close the resource.
-func (s *service) SetEnforcer(ef *casbin.SyncedEnforcer) (err error) {
+func (s *SUser) SetEnforcer(ef *casbin.SyncedEnforcer) (err error) {
 	if !s.cfg.Casbin.Enable {
 		return
 	}
@@ -55,13 +49,5 @@ func (s *service) SetEnforcer(ef *casbin.SyncedEnforcer) (err error) {
 		return fmt.Errorf("enforcer is nil")
 	}
 	s.ef = ef
-	return
-}
-
-func (s *service) GetAllRoles(ctx context.Context) (roles []database.CasbinRole, err error) {
-	return
-}
-
-func (s *service) GetAllUsers(ctx context.Context) (roles []database.CasbinUser, err error) {
 	return
 }

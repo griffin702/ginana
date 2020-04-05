@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	svc  service.Service
+	svc *service.Service
 )
 
 func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error) {
@@ -34,7 +34,7 @@ func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error
 	return
 }
 
-func NewGin(s service.Service, ef *casbin.SyncedEnforcer) (e *gin.Engine, err error) {
+func NewGin(s *service.Service, ef *casbin.SyncedEnforcer) (e *gin.Engine, err error) {
 	svc = s
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = log.GetOutFile()

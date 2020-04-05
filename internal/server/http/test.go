@@ -5,7 +5,7 @@ import (
 )
 
 // BlogGin hello BlogGin.
-type BlogGin struct {
+type GiNana struct {
 	Hello string
 }
 
@@ -19,9 +19,8 @@ type BlogGin struct {
 // @Failure 500 {string} string "failed"
 // @Router / [get]
 func howToStart(ctx *gin.Context) {
-	k := &BlogGin{
-		Hello: "api server opening",
+	k := &GiNana{
+		Hello: "GiNana Server",
 	}
 	ctx.JSON(200, k)
 }
-

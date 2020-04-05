@@ -9,11 +9,11 @@ import (
 )
 
 type App struct {
-	svc  service.Service
+	svc  *service.Service
 	http *http.Server
 }
 
-func NewApp(s service.Service, h *http.Server) (app *App, closeFunc func(), err error) {
+func NewApp(s *service.Service, h *http.Server) (app *App, closeFunc func(), err error) {
 	app = &App{
 		svc:  s,
 		http: h,
