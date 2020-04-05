@@ -39,10 +39,7 @@ func InitApp() (*App, func(), error) {
 		return nil, nil, err
 	}
 	hUser := h_user.New(serviceService)
-	engine, err := http.NewGin(hUser)
-	if err != nil {
-		return nil, nil, err
-	}
+	engine := http.InitRouter(hUser)
 	server, err := http.NewHttpServer(engine, configConfig)
 	if err != nil {
 		return nil, nil, err
@@ -64,4 +61,4 @@ var iProvider = wire.NewSet(user.New)
 
 var hProvider = wire.NewSet(h_user.New)
 
-var httpProvider = wire.NewSet(http.NewGin, http.NewHttpServer)
+var httpProvider = wire.NewSet(http.InitRouter, http.NewHttpServer)
