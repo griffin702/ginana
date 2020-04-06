@@ -43,9 +43,9 @@ func main() {
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			closeFunc()
+			closeLog()
 			log.Info("exit")
 			time.Sleep(time.Second)
-			closeLog()
 			return
 		case syscall.SIGHUP:
 		default:
