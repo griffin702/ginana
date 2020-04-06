@@ -36,7 +36,7 @@ func (e *exampleConf) Set(text string) error {
 	strings = ["a", "b", "c"]
 */
 func ExampleClient() {
-	if err := paladin.Init(); err != nil {
+	if err := paladin.Init(true, "../configs"); err != nil {
 		panic(err)
 	}
 	var ec exampleConf
@@ -70,7 +70,7 @@ func ExampleApolloClient() {
 		```
 	*/
 
-	if err := paladin.Init(apollo.PaladinDriverApollo); err != nil {
+	if err := paladin.Init(false, apollo.PaladinDriverApollo); err != nil {
 		panic(err)
 	}
 	var ec exampleConf
