@@ -1,4 +1,4 @@
-# ginana
+# GiNana
 
 #### 介绍
 - 基于Gin + Gorm + Casbin + Paladin + Logrus + Wire 实现的API开发脚手架，目的是提供一套轻量级的开发框架，致力于结构清晰、方便、快速的完成业务需求的开发。
