@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	global *Config
-	defPath = "../configs/global.toml"  // 默认配置文件
+	global  *Config
+	defPath = "../configs/global.toml" // 默认配置文件
 )
 
 func GetBaseConfig() (cfg *Config, err error) {
@@ -57,19 +57,20 @@ func Global() *Config {
 }
 
 type Config struct {
-	AppName        string
-	Version        string
-	ConfigIsLocal  bool
-	ConfigPath     string
-	MySQL          *database.SQLConfig
-	Casbin         *database.CasbinConfig
-	Server         *ServerConfig
-	CacheExpire    xtime.Duration
+	AppName       string
+	Version       string
+	ConfigIsLocal bool
+	ConfigPath    string
+	MySQL         *database.SQLConfig
+	Casbin        *database.CasbinConfig
+	Server        *ServerConfig
+	GinMode       string
+	CacheExpire   xtime.Duration
 }
 
 type ServerConfig struct {
-	Addr           string
-	ReadTimeout    xtime.Duration
-	WriteTimeout   xtime.Duration
-	IdleTimeout    xtime.Duration
+	Addr         string
+	ReadTimeout  xtime.Duration
+	WriteTimeout xtime.Duration
+	IdleTimeout  xtime.Duration
 }

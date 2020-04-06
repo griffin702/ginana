@@ -1,22 +1,23 @@
 package router
 
 import (
+	"ginana/internal/config"
 	"ginana/internal/server/http/h_user"
 	"ginana/library/log"
 	"ginana/library/mdw"
 	"github.com/gin-gonic/gin"
 )
 
-func InitRouter(u *h_user.HUser) (e *gin.Engine) {
-	e = NewGin()
+func InitRouter(u *h_user.HUser, cfg *config.Config) (e *gin.Engine) {
+	e = NewGin(cfg.GinMode)
 
 	e.GET("/", u.GetUsers)
 
 	return
 }
 
-func NewGin() (e *gin.Engine) {
-	gin.SetMode(gin.ReleaseMode)
+func NewGin(mode string) (e *gin.Engine) {
+	gin.SetMode(mode)
 	gin.DefaultWriter = log.GetOutFile()
 	e = gin.Default()
 	// Logger, Recovery

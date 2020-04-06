@@ -8,4 +8,7 @@ configIsLocal = true
 
 configPath = "../configs"
 
+# ginMode: release, debug
+ginMode = "debug"
+
 cacheExpire = "24h"
