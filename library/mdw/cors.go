@@ -79,15 +79,17 @@ func CORS(allowOriginHosts []string) gin.HandlerFunc {
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 		AllowCredentials: true,
 		MaxAge:           time.Duration(0),
-		AllowAllOrigins:  true,
-		//AllowOriginFunc: func(origin string) bool {
-		//	for _, host := range allowOriginHosts {
-		//		if strings.HasSuffix(strings.ToLower(origin), host) {
-		//			return true
-		//		}
-		//	}
-		//	return false
-		//},
+		//AllowAllOrigins:  true,
+		AllowOriginFunc: func(origin string) bool {
+			for _, host := range allowOriginHosts {
+				if strings.HasSuffix(strings.ToLower(origin), host) {
+					return true
+				} else if host == "*" {
+					return true
+				}
+			}
+			return false
+		},
 	}
 	return newCORS(config)
 }
