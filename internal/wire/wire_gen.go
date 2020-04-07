@@ -40,7 +40,7 @@ func InitApp() (*App, func(), error) {
 		return nil, nil, err
 	}
 	hUser := h_user.New(serviceService)
-	engine := router.InitRouter(hUser)
+	engine := router.InitRouter(hUser, configConfig)
 	server, err := http.NewHttpServer(engine, configConfig)
 	if err != nil {
 		return nil, nil, err

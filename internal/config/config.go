@@ -57,15 +57,19 @@ func Global() *Config {
 }
 
 type Config struct {
-	AppName       string
-	Version       string
-	ConfigIsLocal bool
-	ConfigPath    string
-	MySQL         *database.SQLConfig
-	Casbin        *database.CasbinConfig
-	Server        *ServerConfig
-	GinMode       string
-	CacheExpire   xtime.Duration
+	AppName        string
+	Version        string
+	ConfigIsLocal  bool
+	ConfigPath     string
+	MySQL          *database.SQLConfig
+	Casbin         *database.CasbinConfig
+	Server         *ServerConfig
+	CacheExpire    xtime.Duration
+	GinMode        string
+	EnableGzip     bool
+	EnableTemplate bool
+	ViewsPath      string
+	StaticDir      string
 }
 
 type ServerConfig struct {

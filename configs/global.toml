@@ -8,7 +8,17 @@ configIsLocal = true
 
 configPath = "../configs"
 
+cacheExpire = "24h"
+
 # ginMode: release, debug
 ginMode = "debug"
 
-cacheExpire = "24h"
+enableGzip = true
+
+enableTemplate = false
+
+# ../views
+viewsPath = ""
+
+# static:../static static2:../static2
+staticDir = ""
