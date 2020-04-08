@@ -20,7 +20,7 @@ func NewHttpServer(e *gin.Engine, cfg *config.Config) (h *http.Server, err error
 		WriteTimeout: time.Duration(cfg.Server.WriteTimeout),
 		IdleTimeout:  time.Duration(cfg.Server.IdleTimeout),
 	}
-	log.Infof("HTTP服务已启动 [ http://%s ]", cfg.Server.Addr)
+	log.Printf("HTTP服务已启动 [ http://%s ]", cfg.Server.Addr)
 	err = h.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		log.Errorf(err.Error())
