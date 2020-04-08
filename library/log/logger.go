@@ -26,6 +26,10 @@ func Infof(format string, args ...interface{}) {
 	log.Infof(format, args...)
 }
 
+func Error(args ...interface{}) {
+	log.Error(args...)
+}
+
 func Errorf(format string, args ...interface{}) {
 	log.Errorf(format, args...)
 }

@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 func setup() {
 	go func() {
 		if err := mockserver.Run(); err != nil {
-			log.Info(err)
+			log.Error(err)
 		}
 	}()
 	// wait for mock server to run
