@@ -11,15 +11,15 @@ import (
 )
 
 var (
-	_level          logrus.Level
-	_path           string
-	_maxAge         uint
-	_rotationTime   uint
+	_level        logrus.Level
+	_path         string
+	_maxAge       uint
+	_rotationTime uint
 )
 
 type logger struct {
-	log           *logrus.Logger
-	logType       int
+	log     *logrus.Logger
+	logType int
 }
 
 func (l *logger) GetOutFile() (out io.Writer) {
@@ -32,6 +32,7 @@ func (l *logger) isStdOut() bool {
 
 func (l *logger) NewStdOut() {
 	cli := logrus.New()
+	cli.SetLevel(_level)
 	cli.Out = os.Stdout
 	cli.Formatter = &GiNanaStdFormatter{}
 	cli.AddHook(&hook.DefaultFieldHook{})
@@ -42,27 +43,27 @@ func (l *logger) NewStdOut() {
 
 func (l *logger) NewFile() (cf func()) {
 	cli := logrus.New()
+	cli.SetLevel(_level)
 	out, _ := os.OpenFile(os.DevNull, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	cf = func() {
 		if out != nil {
 			_ = out.Close()
 		}
 	}
-	cli.Out = out
-	cli.SetLevel(_level)
 	logWriter, err := rotatelogs.New(
 		_path+"-%Y-%m-%d-%H-%M.log",
 		//rotatelogs.WithLinkName(d.path),
-		rotatelogs.WithMaxAge(time.Duration(_maxAge)*time.Hour), // 文件最大保存时间
+		rotatelogs.WithMaxAge(time.Duration(_maxAge)*time.Hour),             // 文件最大保存时间
 		rotatelogs.WithRotationTime(time.Duration(_rotationTime)*time.Hour), // 日志切割时间间隔
 	)
 	if err != nil {
 		return
 	}
+	cli.Out = logWriter
 	writeMap := lfshook.WriterMap{
-		logrus.DebugLevel:  logWriter,
-		logrus.InfoLevel: logWriter,
-		logrus.WarnLevel: logWriter,
+		logrus.DebugLevel: logWriter,
+		logrus.InfoLevel:  logWriter,
+		logrus.WarnLevel:  logWriter,
 		logrus.ErrorLevel: logWriter,
 		logrus.FatalLevel: logWriter,
 		logrus.PanicLevel: logWriter,
