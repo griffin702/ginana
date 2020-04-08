@@ -92,6 +92,10 @@ func (l *logger) Infof(format string, args ...interface{}) {
 	l.log.Infof(format, args...)
 }
 
+func (l *logger) Error(args ...interface{}) {
+	l.log.Error(args...)
+}
+
 func (l *logger) Errorf(format string, args ...interface{}) {
 	l.log.Errorf(format, args...)
 }

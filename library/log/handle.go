@@ -11,6 +11,7 @@ type Logger interface {
 	PrintErrf(format string, args ...interface{})
 	Info(args ...interface{})
 	Infof(format string, args ...interface{})
+	Error(args ...interface{})
 	Errorf(format string, args ...interface{})
 }
 
@@ -77,6 +78,12 @@ func (h Loggers) Info(args ...interface{}) {
 func (h Loggers) Infof(format string, args ...interface{}) {
 	for _, l := range h {
 		l.Infof(format, args...)
+	}
+}
+
+func (h Loggers) Error(args ...interface{}) {
+	for _, l := range h {
+		l.Error(args...)
 	}
 }
 
