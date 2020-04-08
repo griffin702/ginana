@@ -15,14 +15,13 @@ import (
 func NewGin(cfg *config.Config) (e *gin.Engine) {
 	gin.SetMode(cfg.GinMode)
 	gin.DefaultWriter = log.GetOutFile()
-	e = gin.Default()
+	e = gin.New()
+	e.Use(mdw.Logger(), mdw.Recovery())
 	if cfg.EnableGzip {
 		e.Use(gzip.Gzip(gzip.DefaultCompression))
 	}
 	initTemplate(e, cfg)
 	initStaticDir(e, cfg)
-	// Logger, Recovery
-	e.Use(mdw.Logger, mdw.Recovery)
 	// Cors
 	e.Use(mdw.CORS([]string{"*"}))
 	// Swagger

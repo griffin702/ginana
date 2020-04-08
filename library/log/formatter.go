@@ -53,12 +53,14 @@ func (f *GiNanaStdFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	} else {
 		b = &bytes.Buffer{}
 	}
+	f.toStdOut(b, fmt.Sprintf("[%s]", data["appName"]))
+	f.toStdOut(b, fmt.Sprintf("[%s]", data[logrus.FieldKeyLevel]))
 	if !f.DisableTimestamp {
 		f.toStdOut(b, data[logrus.FieldKeyTime])
 	}
-	f.toStdOut(b, fmt.Sprintf("[%s]", data["appName"]))
-	f.toStdOut(b, fmt.Sprintf("[%s]", data[logrus.FieldKeyLevel]))
+	b.WriteString(" |")
 	f.toStdOut(b, data[logrus.FieldKeyMsg])
+	//b.WriteString(" |")
 	//f.toStdOut(b, fmt.Sprintf("[%s]", data["stack"]))
 	b.WriteByte('\n')
 	return b.Bytes(), nil

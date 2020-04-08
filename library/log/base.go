@@ -3,7 +3,6 @@ package log
 import (
 	"ginana/library/log/hook"
 	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
-	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"io"
 	"os"
@@ -60,18 +59,19 @@ func (l *logger) NewFile() (cf func()) {
 		return
 	}
 	cli.Out = logWriter
-	writeMap := lfshook.WriterMap{
-		logrus.DebugLevel: logWriter,
-		logrus.InfoLevel:  logWriter,
-		logrus.WarnLevel:  logWriter,
-		logrus.ErrorLevel: logWriter,
-		logrus.FatalLevel: logWriter,
-		logrus.PanicLevel: logWriter,
-	}
-	lfHook := lfshook.NewHook(writeMap, &logrus.TextFormatter{DisableColors: true})
+	cli.Formatter = &GiNanaStdFormatter{}
+	//writeMap := lfshook.WriterMap{
+	//	logrus.DebugLevel: logWriter,
+	//	logrus.InfoLevel:  logWriter,
+	//	logrus.WarnLevel:  logWriter,
+	//	logrus.ErrorLevel: logWriter,
+	//	logrus.FatalLevel: logWriter,
+	//	logrus.PanicLevel: logWriter,
+	//}
+	//lfHook := lfshook.NewHook(writeMap, &logrus.TextFormatter{DisableColors: true})
 	cli.AddHook(&hook.DefaultFieldHook{})
 	cli.AddHook(&hook.LineHook{})
-	cli.AddHook(lfHook)
+	//cli.AddHook(lfHook)
 	l.log = cli
 	return
 }

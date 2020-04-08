@@ -3,7 +3,7 @@ package log
 import "io"
 
 var (
-	log   Logger
+	log Logger
 )
 
 func GetOutFile() (out io.Writer) {
