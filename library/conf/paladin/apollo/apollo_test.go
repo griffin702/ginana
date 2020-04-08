@@ -3,12 +3,12 @@ package apollo
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"testing"
 	"time"
 
 	"ginana/library/conf/paladin/apollo/internal/mockserver"
-	"ginana/library/log"
 )
 
 func TestMain(m *testing.M) {
@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 func setup() {
 	go func() {
 		if err := mockserver.Run(); err != nil {
-			log.Error(err)
+			log.Fatal(err)
 		}
 	}()
 	// wait for mock server to run

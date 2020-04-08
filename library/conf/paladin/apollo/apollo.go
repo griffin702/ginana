@@ -4,13 +4,14 @@ import (
 	"context"
 	"errors"
 	"flag"
-	"ginana/library/conf/paladin"
-	"ginana/library/log"
-	"github.com/philchia/agollo"
+	"log"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"ginana/library/conf/paladin"
+	"github.com/philchia/agollo"
 )
 
 var (
