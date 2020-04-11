@@ -2,7 +2,7 @@ package hook
 
 import (
 	"fmt"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"runtime"
 	"strings"
 )
@@ -11,16 +11,16 @@ import (
 type LineHook struct {
 	// skip为遍历调用栈开始的索引位置
 	Skip   int
-	levels []log.Level
+	levels []logrus.Level
 }
 
 // Levels implement levels
-func (h *LineHook) Levels() []log.Level {
-	return log.AllLevels
+func (h *LineHook) Levels() []logrus.Level {
+	return logrus.AllLevels
 }
 
 // Fire implement fire
-func (h *LineHook) Fire(entry *log.Entry) error {
+func (h *LineHook) Fire(entry *logrus.Entry) error {
 	entry.Data["stack"] = h.findCaller(h.Skip)
 	return nil
 }

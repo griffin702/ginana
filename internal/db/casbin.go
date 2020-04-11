@@ -29,7 +29,7 @@ func NewCasbin(user i_user.IUser, cfg *config.Config) (ef *casbin.SyncedEnforcer
 func WatchCasbinModel(e *casbin.SyncedEnforcer, c *database.CasbinConfig) {
 	for range paladin.WatchEvent(context.Background(), c.Model) {
 		if err := e.LoadModel(); err != nil {
-			log.PrintErrf("e.LoadModel error(%v)", err)
+			log.Printf("e.LoadModel error(%v)", err)
 		}
 	}
 }

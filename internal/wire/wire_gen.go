@@ -8,9 +8,9 @@ package wire
 import (
 	"ginana/internal/config"
 	"ginana/internal/db"
-	"ginana/internal/server/http"
-	"ginana/internal/server/http/h_user"
-	"ginana/internal/server/http/router"
+	"ginana/internal/server"
+	"ginana/internal/server/controller/api"
+	"ginana/internal/server/router"
 	"ginana/internal/service"
 	"ginana/internal/service/i_user"
 	"github.com/google/wire"
@@ -39,13 +39,13 @@ func InitApp() (*App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	hUser := h_user.New(serviceService)
-	engine := router.InitRouter(hUser, configConfig)
-	server, err := http.NewHttpServer(engine, configConfig)
+	cApi := api.New(serviceService)
+	application := router.InitRouter(cApi, configConfig)
+	httpServer, err := server.NewHttpServer(application, configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	app, cleanup, err := NewApp(serviceService, server)
+	app, cleanup, err := NewApp(serviceService, httpServer)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -60,6 +60,6 @@ var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewCasbin)
 
 var iProvider = wire.NewSet(i_user.New)
 
-var hProvider = wire.NewSet(h_user.New)
+var cProvider = wire.NewSet(api.New)
 
-var httpProvider = wire.NewSet(router.InitRouter, http.NewHttpServer)
+var httpProvider = wire.NewSet(router.InitRouter, server.NewHttpServer)

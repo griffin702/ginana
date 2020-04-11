@@ -65,9 +65,10 @@ type Config struct {
 	Casbin         *database.CasbinConfig
 	Server         *ServerConfig
 	CacheExpire    xtime.Duration
-	GinMode        string
+	IrisLogLevel   string
 	EnableGzip     bool
 	EnableTemplate bool
+	ReloadTemplate bool
 	ViewsPath      string
 	StaticDir      string
 }

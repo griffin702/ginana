@@ -10,12 +10,14 @@ configPath = "../configs"
 
 cacheExpire = "24h"
 
-# ginMode: release, debug
-ginMode = "debug"
+# irisLogLevel: disable, fatal, error, warn, info, debug
+irisLogLevel = "debug"
 
 enableGzip = true
 
 enableTemplate = false
+
+reloadTemplate = false
 
 # ../views
 viewsPath = ""

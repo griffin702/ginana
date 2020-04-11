@@ -76,26 +76,46 @@ func (l *logger) NewFile() (cf func()) {
 	return
 }
 
-func (l *logger) Printf(format string, args ...interface{}) {
-	l.log.Infof(format, args...)
+func (l *logger) Print(args ...interface{}) {
+	l.log.Print(args...)
 }
 
-func (l *logger) PrintErrf(format string, args ...interface{}) {
-	l.log.Errorf(format, args...)
-}
-
-func (l *logger) Info(args ...interface{}) {
-	l.log.Info(args...)
-}
-
-func (l *logger) Infof(format string, args ...interface{}) {
-	l.log.Infof(format, args...)
+func (l *logger) Println(args ...interface{}) {
+	l.log.Println(args...)
 }
 
 func (l *logger) Error(args ...interface{}) {
 	l.log.Error(args...)
 }
 
+func (l *logger) Warn(args ...interface{}) {
+	l.log.Warn(args...)
+}
+
+func (l *logger) Info(args ...interface{}) {
+	l.log.Info(args...)
+}
+
+func (l *logger) Debug(args ...interface{}) {
+	l.log.Debug(args...)
+}
+
+func (l *logger) Printf(format string, args ...interface{}) {
+	l.log.Printf(format, args...)
+}
+
 func (l *logger) Errorf(format string, args ...interface{}) {
 	l.log.Errorf(format, args...)
+}
+
+func (l *logger) Warnf(format string, args ...interface{}) {
+	l.log.Warnf(format, args...)
+}
+
+func (l *logger) Infof(format string, args ...interface{}) {
+	l.log.Infof(format, args...)
+}
+
+func (l *logger) Debugf(format string, args ...interface{}) {
+	l.log.Debugf(format, args...)
 }

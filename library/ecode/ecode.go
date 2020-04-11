@@ -62,6 +62,9 @@ func Errorf(code int, args ...interface{}) *ecode {
 
 // Cause cause from error to ecode.
 func Cause(e error) ECode {
+	if e == nil {
+		return &ecode{code: 0}
+	}
 	ec, ok := errors.Cause(e).(ECode)
 	if ok {
 		return ec

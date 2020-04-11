@@ -7,12 +7,17 @@ import (
 type Logger interface {
 	GetOutFile() (out io.Writer)
 	isStdOut() bool
-	Printf(format string, args ...interface{})
-	PrintErrf(format string, args ...interface{})
-	Info(args ...interface{})
-	Infof(format string, args ...interface{})
+	Print(args ...interface{})
+	Println(args ...interface{})
 	Error(args ...interface{})
+	Warn(args ...interface{})
+	Info(args ...interface{})
+	Debug(args ...interface{})
+	Printf(format string, args ...interface{})
 	Errorf(format string, args ...interface{})
+	Warnf(format string, args ...interface{})
+	Infof(format string, args ...interface{})
+	Debugf(format string, args ...interface{})
 }
 
 func init() {
@@ -55,29 +60,19 @@ func (h Loggers) isStdOut() bool {
 	return false
 }
 
-func (h Loggers) Printf(format string, args ...interface{}) {
+func (h Loggers) Print(args ...interface{}) {
 	for _, l := range h {
 		if l.isStdOut() {
-			l.Printf(format, args...)
+			l.Print(args...)
 		}
 	}
 }
 
-func (h Loggers) PrintErrf(format string, args ...interface{}) {
+func (h Loggers) Println(args ...interface{}) {
 	for _, l := range h {
-		l.Printf(format, args...)
-	}
-}
-
-func (h Loggers) Info(args ...interface{}) {
-	for _, l := range h {
-		l.Info(args...)
-	}
-}
-
-func (h Loggers) Infof(format string, args ...interface{}) {
-	for _, l := range h {
-		l.Infof(format, args...)
+		if l.isStdOut() {
+			l.Println(args...)
+		}
 	}
 }
 
@@ -87,8 +82,52 @@ func (h Loggers) Error(args ...interface{}) {
 	}
 }
 
+func (h Loggers) Warn(args ...interface{}) {
+	for _, l := range h {
+		l.Warn(args...)
+	}
+}
+
+func (h Loggers) Info(args ...interface{}) {
+	for _, l := range h {
+		l.Info(args...)
+	}
+}
+
+func (h Loggers) Debug(args ...interface{}) {
+	for _, l := range h {
+		l.Debug(args...)
+	}
+}
+
+func (h Loggers) Printf(format string, args ...interface{}) {
+	for _, l := range h {
+		if l.isStdOut() {
+			l.Printf(format, args...)
+		}
+	}
+}
+
 func (h Loggers) Errorf(format string, args ...interface{}) {
 	for _, l := range h {
 		l.Errorf(format, args...)
+	}
+}
+
+func (h Loggers) Warnf(format string, args ...interface{}) {
+	for _, l := range h {
+		l.Warnf(format, args...)
+	}
+}
+
+func (h Loggers) Infof(format string, args ...interface{}) {
+	for _, l := range h {
+		l.Infof(format, args...)
+	}
+}
+
+func (h Loggers) Debugf(format string, args ...interface{}) {
+	for _, l := range h {
+		l.Debugf(format, args...)
 	}
 }
