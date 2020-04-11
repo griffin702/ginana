@@ -1,9 +1,8 @@
 package mdw
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/kataras/iris/v12"
 	swaggerFiles "github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/swag"
 	"golang.org/x/net/webdav"
 	"html/template"
@@ -11,14 +10,27 @@ import (
 	"strings"
 )
 
-func SwaggerHandler(url string) gin.HandlerFunc {
-	u := ginSwagger.URL(url)
+func SwaggerHandler(url string) iris.Handler {
+	u := URL(url)
 	return swaggerHandler(swaggerFiles.Handler, u)
 }
 
+// Config stores ginSwagger configuration variables.
+type Config struct {
+	//The url pointing to API definition (normally swagger.json or swagger.yaml). Default is `doc.json`.
+	URL string
+}
+
+// URL presents the url pointing to API definition (normally swagger.json or swagger.yaml).
+func URL(url string) func(c *Config) {
+	return func(c *Config) {
+		c.URL = url
+	}
+}
+
 // SwaggerHandler wraps `http.Handler` into `gin.HandlerFunc`.
-func swaggerHandler(h *webdav.Handler, confs ...func(c *ginSwagger.Config)) gin.HandlerFunc {
-	defaultConfig := &ginSwagger.Config{
+func swaggerHandler(h *webdav.Handler, confs ...func(c *Config)) iris.Handler {
+	defaultConfig := &Config{
 		URL: "doc.json",
 	}
 
@@ -32,16 +44,17 @@ func swaggerHandler(h *webdav.Handler, confs ...func(c *ginSwagger.Config)) gin.
 
 	var rexp = regexp.MustCompile(`(.*)(index\.html|doc\.json|favicon-16x16\.png|favicon-32x32\.png|/oauth2-redirect\.html|swagger-ui\.css|swagger-ui\.css\.map|swagger-ui\.js|swagger-ui\.js\.map|swagger-ui-bundle\.js|swagger-ui-bundle\.js\.map|swagger-ui-standalone-preset\.js|swagger-ui-standalone-preset\.js\.map)[\?|.]*`)
 
-	return func(c *gin.Context) {
+	return func(c iris.Context) {
 
 		type swaggerUIBundle struct {
 			URL string
 		}
 
 		var matches []string
-		if matches = rexp.FindStringSubmatch(c.Request.RequestURI); len(matches) != 3 {
-			c.Status(404)
-			c.Writer.Write([]byte("404 page not found"))
+		if matches = rexp.FindStringSubmatch(c.Request().RequestURI); len(matches) != 3 {
+			c.StatusCode(404)
+			c.ResponseWriter().Write([]byte("404 page not found"))
+			c.StopExecution()
 			return
 		}
 		path := matches[2]
@@ -49,18 +62,18 @@ func swaggerHandler(h *webdav.Handler, confs ...func(c *ginSwagger.Config)) gin.
 		h.Prefix = prefix
 
 		if strings.HasSuffix(path, ".html") {
-			c.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+			c.Header("Content-Type", "text/html; charset=utf-8")
 		} else if strings.HasSuffix(path, ".css") {
-			c.Writer.Header().Set("Content-Type", "text/css; charset=utf-8")
+			c.Header("Content-Type", "text/css; charset=utf-8")
 		} else if strings.HasSuffix(path, ".js") {
-			c.Writer.Header().Set("Content-Type", "application/javascript")
+			c.Header("Content-Type", "application/javascript")
 		} else if strings.HasSuffix(path, ".json") {
-			c.Writer.Header().Set("Content-Type", "application/json")
+			c.Header("Content-Type", "application/json")
 		}
 
 		switch path {
 		case "index.html":
-			index.Execute(c.Writer, &swaggerUIBundle{
+			index.Execute(c.ResponseWriter(), &swaggerUIBundle{
 				URL: defaultConfig.URL,
 			})
 		case "doc.json":
@@ -68,10 +81,10 @@ func swaggerHandler(h *webdav.Handler, confs ...func(c *ginSwagger.Config)) gin.
 			if err != nil {
 				panic(err)
 			}
-			c.Writer.Write([]byte(doc))
+			c.ResponseWriter().Write([]byte(doc))
 			return
 		default:
-			h.ServeHTTP(c.Writer, c.Request)
+			h.ServeHTTP(c.ResponseWriter(), c.Request())
 		}
 	}
 }

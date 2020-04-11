@@ -15,7 +15,7 @@ import (
 
 // @title GiNana
 // @version 1.0.0
-// @description 基于gin的api服务，默认端口：8000
+// @description 基于iris的api服务，默认端口：8000
 // @host 127.0.0.1:8000
 // @BasePath /api
 // @license.name Apache 2.0

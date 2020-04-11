@@ -5,6 +5,7 @@ import (
 	"ginana/internal/server/resp"
 	"ginana/library/ecode"
 	"ginana/library/log"
+	"ginana/library/mdw"
 	"ginana/library/tools"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/golog"
@@ -34,9 +35,9 @@ func NewIris(cfg *config.Config) (e *iris.Application) {
 	e.OnAnyErrorCode(customLogger, func(ctx iris.Context) {
 		ctx.JSON(resp.PlusJson(nil, ecode.Errorf(ctx.GetStatusCode())))
 	})
-	//// Swagger
-	//handle := mdw.SwaggerHandler("http://127.0.0.1:8000/swagger/doc.json")
-	//e.GET("/swagger/*any", handle)
+	// Swagger
+	handle := mdw.SwaggerHandler("http://127.0.0.1:8000/swagger/doc.json")
+	e.Get("/swagger/*any", handle)
 	return
 }
 
