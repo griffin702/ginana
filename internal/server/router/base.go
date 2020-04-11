@@ -20,6 +20,7 @@ func NewIris(cfg *config.Config) (e *iris.Application) {
 	golog.Install(log.GetLogger())
 	customLogger := logger.New(logger.Config{
 		Status: true, IP: true, Method: true, Path: true, Query: true,
+		//MessageHeaderKeys: []string{"User-Agent"},
 	})
 	e.Use(customLogger, recover.New())
 	e.Logger().SetLevel(cfg.IrisLogLevel)

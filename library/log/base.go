@@ -59,7 +59,9 @@ func (l *logger) NewFile() (cf func()) {
 		return
 	}
 	cli.Out = logWriter
-	cli.Formatter = &GiNanaStdFormatter{}
+	cli.Formatter = &GiNanaStdFormatter{
+		DisableColors: true,
+	}
 	//writeMap := lfshook.WriterMap{
 	//	logrus.DebugLevel: logWriter,
 	//	logrus.InfoLevel:  logWriter,
