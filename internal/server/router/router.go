@@ -12,7 +12,7 @@ func InitRouter(api *api.CApi, cfg *config.Config) (e *iris.Application) {
 	//	Cookie:  "GiNana_Session",
 	//	Expires: 24 * time.Hour,
 	//})
-	apiParty := e.Party("/api")
+	apiParty := e.Party("/api", Cors()).AllowMethods(iris.MethodOptions)
 	{
 		apiParty.Get("/", api.GetUsers)
 	}

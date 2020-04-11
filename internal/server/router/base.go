@@ -6,6 +6,7 @@ import (
 	"ginana/library/ecode"
 	"ginana/library/log"
 	"ginana/library/tools"
+	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/golog"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/middleware/logger"
@@ -33,8 +34,6 @@ func NewIris(cfg *config.Config) (e *iris.Application) {
 	e.OnAnyErrorCode(customLogger, func(ctx iris.Context) {
 		ctx.JSON(resp.PlusJson(nil, ecode.Errorf(ctx.GetStatusCode())))
 	})
-	//// Cors
-	//e.Use(mdw.CORS([]string{"*"}))
 	//// Swagger
 	//handle := mdw.SwaggerHandler("http://127.0.0.1:8000/swagger/doc.json")
 	//e.GET("/swagger/*any", handle)
@@ -72,4 +71,15 @@ func dateFormat(t time.Time, format string) (template.HTML, error) {
 
 func str2html(str string) (template.HTML, error) {
 	return template.HTML(str), nil
+}
+
+// Cors 中间件
+func Cors() iris.Handler {
+	return cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
+		AllowedMethods:   []string{"PUT", "PATCH", "GET", "POST", "OPTIONS", "DELETE"},
+		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"},
+		AllowCredentials: true,
+	})
 }
