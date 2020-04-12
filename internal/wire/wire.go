@@ -14,7 +14,7 @@ import (
 	"github.com/google/wire"
 )
 
-var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewCasbin)
+var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewMC, db.NewCasbin)
 var iProvider = wire.NewSet(i_user.New)
 var cProvider = wire.NewSet(api.New)
 var httpProvider = wire.NewSet(router.InitRouter, server.NewHttpServer)
