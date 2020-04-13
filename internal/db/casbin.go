@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"ginana/internal/config"
-	"ginana/internal/service/i_user"
+	"ginana/internal/service"
 	"ginana/library/conf/paladin"
 	"ginana/library/database"
 	"ginana/library/log"
@@ -12,13 +12,16 @@ import (
 )
 
 // NewCasbin after Service, and SetEnforcer for service
-func NewCasbin(user i_user.IUser, cfg *config.Config) (ef *casbin.SyncedEnforcer, err error) {
+func NewCasbin(svc service.Service, cfg *config.Config) (ef *casbin.SyncedEnforcer, err error) {
 	key := "casbin.toml"
 	if err = paladin.Get(key).UnmarshalTOML(cfg); err != nil {
 		return
 	}
-	ef, err = database.NewCasbinConn(user, cfg.ConfigPath, cfg.Casbin)
+	ef, err = database.NewCasbinConn(svc, cfg.ConfigPath, cfg.Casbin)
 	if err != nil {
+		return
+	}
+	if err = svc.SetEnforcer(ef); err != nil {
 		return
 	}
 	go WatchCasbinModel(ef, cfg.Casbin)

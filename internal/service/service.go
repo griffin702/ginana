@@ -1,37 +1,53 @@
 package service
 
 import (
-	"ginana/internal/service/i_user"
+	"context"
+	"fmt"
+	"ginana/internal/config"
 	"ginana/library/cache/memcache"
+	"ginana/library/database"
+	"ginana/library/tools"
 	"github.com/casbin/casbin/v2"
 	"github.com/jinzhu/gorm"
 )
 
-type Service struct {
-	db   *gorm.DB
-	ef   *casbin.SyncedEnforcer
-	mc   memcache.Memcache
-	User i_user.IUser
+type Service interface {
+	Close()
+	SetEnforcer(ef *casbin.SyncedEnforcer) (err error)
+	GetAllRoles(ctx context.Context) (roles []database.CasbinRole, err error)
+	GetAllUsers(ctx context.Context) (roles []database.CasbinUser, err error)
 }
 
-func New(
-	db *gorm.DB,
-	ef *casbin.SyncedEnforcer,
-	mc memcache.Memcache,
-	u i_user.IUser,
-) (s *Service, err error) {
-	if err = u.SetEnforcer(ef); err != nil {
-		return
-	}
-	s = &Service{
+func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache) (s Service, err error) {
+	s = &service{
+		cfg:  cfg,
 		db:   db,
-		ef:   ef,
 		mc:   mc,
-		User: u,
+		tool: tools.New(),
 	}
 	return
 }
 
-func (s *Service) Close() {
+type service struct {
+	cfg  *config.Config
+	db   *gorm.DB
+	ef   *casbin.SyncedEnforcer
+	mc   memcache.Memcache
+	tool *tools.Tool
+}
+
+func (s *service) Close() {
 	_ = s.db.Close()
+}
+
+// Close close the resource.
+func (s *service) SetEnforcer(ef *casbin.SyncedEnforcer) (err error) {
+	if !s.cfg.Casbin.Enable {
+		return
+	}
+	if s.tool.PtrIsNil(ef) {
+		return fmt.Errorf("enforcer is nil")
+	}
+	s.ef = ef
+	return
 }
