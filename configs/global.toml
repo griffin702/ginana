@@ -8,8 +8,6 @@ configIsLocal = true
 
 configPath = "../configs"
 
-cacheExpire = "24h"
-
 # irisLogLevel: disable, fatal, error, warn, info, debug
 irisLogLevel = "debug"
 

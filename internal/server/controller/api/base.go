@@ -8,7 +8,7 @@ import (
 )
 
 type CApi struct {
-	Ctx iris.Context
+	//Ctx iris.Context
 	svc *service.Service
 }
 

@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"ginana/library/cache/memcache"
 	"ginana/library/conf/paladin"
 	"ginana/library/database"
 	"ginana/library/log"
@@ -63,8 +64,8 @@ type Config struct {
 	ConfigPath     string
 	MySQL          *database.SQLConfig
 	Casbin         *database.CasbinConfig
+	Memcache       *memcache.Config
 	Server         *ServerConfig
-	CacheExpire    xtime.Duration
 	IrisLogLevel   string
 	EnableGzip     bool
 	EnableTemplate bool

@@ -8,7 +8,6 @@ import (
 	"ginana/library/tools"
 	"github.com/casbin/casbin/v2"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 // Service service interface
@@ -32,10 +31,9 @@ type SUser struct {
 // New new a service and return
 func New(db *gorm.DB, cfg *config.Config) (s IUser, err error) {
 	s = &SUser{
-		db:          db,
-		cfg:         cfg,
-		tool:        tools.New(),
-		cacheExpire: int32(time.Duration(cfg.CacheExpire) / time.Second),
+		db:   db,
+		cfg:  cfg,
+		tool: tools.New(),
 	}
 	return
 }

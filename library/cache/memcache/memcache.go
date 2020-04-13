@@ -10,16 +10,20 @@ import (
 
 // Config memcache config.
 type Config struct {
-	Addr      string
-	IdleConns int
-	Timeout   xtime.Duration
+	Addr        string
+	IdleConns   int
+	Timeout     xtime.Duration
+	CacheExpire xtime.Duration
 }
 
 func New(cfg *Config) Memcache {
 	client := mc.New(cfg.Addr)
 	client.MaxIdleConns = cfg.IdleConns
 	client.Timeout = time.Duration(cfg.Timeout)
-	return &memcache{client: client}
+	return &memcache{
+		client:      client,
+		cacheExpire: int32(time.Duration(cfg.CacheExpire) / time.Second),
+	}
 }
 
 type Memcache interface {
@@ -39,7 +43,8 @@ type Memcache interface {
 
 // Memcache memcache client
 type memcache struct {
-	client *mc.Client
+	client      *mc.Client
+	cacheExpire int32
 }
 
 func (m *memcache) decode(item *mc.Item, v interface{}) (err error) {
@@ -84,7 +89,7 @@ func (m *memcache) Set(key string, v interface{}) (err error) {
 	if err != nil {
 		return
 	}
-	err = m.client.Set(&mc.Item{Key: key, Value: value})
+	err = m.client.Set(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
 	return
 }
 
@@ -93,7 +98,7 @@ func (m *memcache) Add(key string, v interface{}) (err error) {
 	if err != nil {
 		return
 	}
-	err = m.client.Add(&mc.Item{Key: key, Value: value})
+	err = m.client.Add(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
 	return
 }
 
@@ -102,7 +107,7 @@ func (m *memcache) Replace(key string, v interface{}) (err error) {
 	if err != nil {
 		return
 	}
-	err = m.client.Replace(&mc.Item{Key: key, Value: value})
+	err = m.client.Replace(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
 	return
 }
 
