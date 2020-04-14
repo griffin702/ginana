@@ -9,12 +9,12 @@ import (
 
 type CApi struct {
 	//Ctx iris.Context
-	svc service.Service
+	Svc service.Service
 }
 
 func New(s service.Service) *CApi {
 	return &CApi{
-		svc: s,
+		Svc: s,
 	}
 }
 
