@@ -35,12 +35,19 @@ func InitApp() (*App, func(), error) {
 		return nil, nil, err
 	}
 	cApi := api.New(serviceService)
-	application := router.InitRouter(cApi, configConfig)
+	application, err := router.InitRouter(cApi, configConfig)
+	if err != nil {
+		return nil, nil, err
+	}
 	httpServer, err := server.NewHttpServer(application, configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	app, cleanup, err := NewApp(serviceService, httpServer)
+	syncedEnforcer, err := db.NewCasbin(serviceService, configConfig)
+	if err != nil {
+		return nil, nil, err
+	}
+	app, cleanup, err := NewApp(httpServer, serviceService, syncedEnforcer)
 	if err != nil {
 		return nil, nil, err
 	}

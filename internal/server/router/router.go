@@ -6,7 +6,7 @@ import (
 	"github.com/kataras/iris/v12"
 )
 
-func InitRouter(api *api.CApi, cfg *config.Config) (e *iris.Application) {
+func InitRouter(api *api.CApi, cfg *config.Config) (e *iris.Application, err error) {
 	e = NewIris(cfg)
 	//sessManager := sessions.New(sessions.Config{
 	//	Cookie:  "GiNana_Session",

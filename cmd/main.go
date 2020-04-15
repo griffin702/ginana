@@ -7,6 +7,7 @@ import (
 	"ginana/internal/wire"
 	"ginana/library/conf/paladin"
 	"ginana/library/log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -31,25 +32,31 @@ func main() {
 	if err := paladin.Init(cfg.ConfigIsLocal, cfg.ConfigPath); err != nil {
 		panic(err)
 	}
-	_, closeFunc, err := wire.InitApp()
+	app, closeFunc, err := wire.InitApp()
 	if err != nil {
 		panic(err)
 	}
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
-	for {
-		s := <-c
-		log.Infof("get a signal %s", s.String())
-		switch s {
-		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
-			closeFunc()
-			closeLog()
-			log.Info("exit")
-			time.Sleep(time.Second)
-			return
-		case syscall.SIGHUP:
-		default:
-			return
+	go func() {
+		ch := make(chan os.Signal, 1)
+		signal.Notify(ch, syscall.SIGHUP, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM, syscall.SIGQUIT)
+		for {
+			s := <-ch
+			log.Infof("get a signal %s", s.String())
+			switch s {
+			case syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+				log.Info("GiNana App Exit")
+				time.Sleep(time.Second)
+				closeFunc()
+				closeLog()
+				return
+			case syscall.SIGHUP:
+			default:
+				return
+			}
 		}
+	}()
+	err = app.Server.ListenAndServe()
+	if err != nil && err != http.ErrServerClosed {
+		log.Println(err.Error())
 	}
 }

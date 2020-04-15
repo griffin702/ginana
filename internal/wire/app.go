@@ -4,26 +4,29 @@ import (
 	"context"
 	"ginana/internal/service"
 	"ginana/library/log"
+	"github.com/casbin/casbin/v2"
 	"net/http"
 	"time"
 )
 
 type App struct {
-	svc  service.Service
-	http *http.Server
+	Server *http.Server
+	svc    service.Service
+	ef     *casbin.SyncedEnforcer
 }
 
-func NewApp(s service.Service, h *http.Server) (app *App, closeFunc func(), err error) {
+func NewApp(server *http.Server, svc service.Service, ef *casbin.SyncedEnforcer) (app *App, closeFunc func(), err error) {
 	app = &App{
-		svc:  s,
-		http: h,
+		Server: server,
+		svc:    svc,
+		ef:     ef,
 	}
 	closeFunc = func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 35*time.Second)
-		if err := h.Shutdown(ctx); err != nil {
-			log.Errorf("httpSrv.Shutdown error(%v)", err)
+		if err := server.Shutdown(ctx); err != nil {
+			log.Errorf("httpServer.Shutdown error(%v)", err)
 		}
-		s.Close()
+		svc.Close()
 		cancel()
 	}
 	return
