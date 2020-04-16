@@ -48,6 +48,7 @@ func WatchCasbinConfig(e *casbin.SyncedEnforcer, c *database.CasbinConfig, key s
 		}
 		if c.AutoLoad != autoLoad {
 			if c.AutoLoad {
+				_ = e.InitWithModelAndAdapter(e.GetModel(), e.GetAdapter())
 				e.StartAutoLoadPolicy(time.Duration(c.AutoLoadInternal) * time.Second)
 			} else {
 				e.StopAutoLoadPolicy()
