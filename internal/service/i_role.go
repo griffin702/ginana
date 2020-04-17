@@ -9,28 +9,26 @@ import (
 	"sync"
 )
 
-func (s *service) GetEFRoles(c context.Context) (roles []*database.CasbinRole, err error) {
+func (s *service) GetEFRoles(c context.Context) (roles []*database.EFRolePolicy, err error) {
 	var roleIdList []int64
 	s.db.Model(&model.Role{}).Select("id").Pluck("id", &roleIdList)
 	var wg sync.WaitGroup
 	var ch = make(chan int64, 1)
 	wg.Add(len(roleIdList))
 	for _, roleId := range roleIdList {
-		go func(roleId int64, roles *[]*database.CasbinRole, wg *sync.WaitGroup) {
+		go func(roleId int64, roles *[]*database.EFRolePolicy, wg *sync.WaitGroup) {
 			r, err := s.GetRole(c, roleId)
 			if err != nil {
 				return
 			}
-			role := new(database.CasbinRole)
-			role.RoleName = r.RoleName
-			for _, p := range r.Policys {
-				policy := new(database.CasbinPolicy)
-				policy.Router = p.Router
-				policy.Method = p.Method
-				role.Policys = append(role.Policys, policy)
-			}
 			ch <- roleId
-			*roles = append(*roles, role)
+			for _, policy := range r.Policys {
+				role := new(database.EFRolePolicy)
+				role.RoleName = r.RoleName
+				role.Router = policy.Router
+				role.Method = policy.Method
+				*roles = append(*roles, role)
+			}
 			<-ch
 			wg.Done()
 		}(roleId, &roles, &wg)

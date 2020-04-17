@@ -11,23 +11,19 @@ import (
 )
 
 type casbinService interface {
-	GetEFRoles(ctx context.Context) (roles []*CasbinRole, err error)
-	GetEFUsers(ctx context.Context) (users []*CasbinUser, err error)
+	GetEFRoles(ctx context.Context) (roles []*EFRolePolicy, err error)
+	GetEFUsers(ctx context.Context) (users []*EFUseRole, err error)
 }
 
-type CasbinRole struct {
+type EFRolePolicy struct {
 	RoleName string
-	Policys  []*CasbinPolicy
+	Router   string
+	Method   string
 }
 
-type CasbinPolicy struct {
-	Router string
-	Method string
-}
-
-type CasbinUser struct {
-	ID        int64
-	RoleNames []string
+type EFUseRole struct {
+	UserID   int64
+	RoleName string
 }
 
 // Config casbin config.
@@ -99,13 +95,11 @@ func (a *CasbinAdapter) loadRolePolicy(ctx context.Context, model model.Model) e
 		return err
 	}
 	for _, role := range roles {
-		for _, policy := range role.Policys {
-			if policy.Router == "" || policy.Method == "" {
-				continue
-			}
-			line := fmt.Sprintf("p,%s,%s,%s", role.RoleName, policy.Router, policy.Method)
-			persist.LoadPolicyLine(line, model)
+		if role.Router == "" || role.Method == "" {
+			continue
 		}
+		line := fmt.Sprintf("p,%s,%s,%s", role.RoleName, role.Router, role.Method)
+		persist.LoadPolicyLine(line, model)
 	}
 	return nil
 }
@@ -117,10 +111,8 @@ func (a *CasbinAdapter) loadUserPolicy(ctx context.Context, model model.Model) e
 		return err
 	}
 	for _, user := range users {
-		for _, roleName := range user.RoleNames {
-			line := fmt.Sprintf("g,%d,%s", user.ID, roleName)
-			persist.LoadPolicyLine(line, model)
-		}
+		line := fmt.Sprintf("g,%d,%s", user.UserID, user.RoleName)
+		persist.LoadPolicyLine(line, model)
 	}
 	return nil
 }

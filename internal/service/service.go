@@ -15,8 +15,8 @@ import (
 type Service interface {
 	Close()
 	SetEnforcer(ef *casbin.SyncedEnforcer) (err error)
-	GetEFRoles(ctx context.Context) (roles []*database.CasbinRole, err error)
-	GetEFUsers(ctx context.Context) (roles []*database.CasbinUser, err error)
+	GetEFRoles(ctx context.Context) (roles []*database.EFRolePolicy, err error)
+	GetEFUsers(ctx context.Context) (users []*database.EFUseRole, err error)
 }
 
 func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache, eh *map[int]string) (s Service, err error) {
