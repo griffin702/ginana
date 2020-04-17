@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"ginana/internal/config"
 	"ginana/library/cache/memcache"
@@ -18,11 +19,12 @@ type Service interface {
 	GetEFUsers(ctx context.Context) (roles []*database.CasbinUser, err error)
 }
 
-func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache) (s Service, err error) {
+func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache, eh *map[int]string) (s Service, err error) {
 	s = &service{
 		cfg:  cfg,
 		db:   db,
 		mc:   mc,
+		eh:   eh,
 		tool: tools.New(),
 	}
 	return
@@ -33,11 +35,24 @@ type service struct {
 	db   *gorm.DB
 	ef   *casbin.SyncedEnforcer
 	mc   memcache.Memcache
+	eh   *map[int]string
 	tool *tools.Tool
 }
 
 func (s *service) Close() {
 	_ = s.db.Close()
+}
+
+func (s *service) GetError(i int, args ...string) (int, error) {
+	if len(args) > 1 {
+		panic("too many arguments")
+	}
+	errHelper := *s.eh
+	msg := errHelper[i]
+	if len(args) == 1 {
+		msg = args[0]
+	}
+	return i, errors.New(msg)
 }
 
 // Close close the resource.

@@ -28,9 +28,19 @@ func NewDB(cfg *config.Config) (db *gorm.DB, err error) {
 func initTable(db *gorm.DB) {
 	db.AutoMigrate(
 		new(model.User),
+		new(model.Role),
+		new(model.Policy),
 	)
 }
 
 func initTableData(db *gorm.DB) {
-
+	admin := new(model.User)
+	admin.ID = 1
+	if err := db.Find(admin).Error; err != nil {
+		admin.Username = "admin"
+		admin.Password = "$2a$10$qhcgRHCZOsn3V8854Vw3eeJHPra.CSX4MACEIS4VqY10AazjxJxqO"
+		admin.Nickname = "admin"
+		admin.IsAuth = true
+		db.Create(admin)
+	}
 }
