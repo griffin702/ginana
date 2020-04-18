@@ -2,7 +2,7 @@
 	params = "timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Asia%2FShanghai&charset=utf8mb4,utf8"
 	driver = "mysql"
 	dbUser = "root"
-	dbPwd = ""
+	dbPwd = "root"
 	dbHost = "127.0.0.1"
 	dbName = "ginana"
 	dbPort = "3306"
