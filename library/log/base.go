@@ -4,6 +4,7 @@ import (
 	"ginana/library/log/hook"
 	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
 	"github.com/sirupsen/logrus"
+	"github.com/ulricqin/goutils/filetool"
 	"io"
 	"os"
 	"time"
@@ -49,8 +50,9 @@ func (l *logger) NewFile() (cf func()) {
 			_ = out.Close()
 		}
 	}
+	_ = filetool.InsureDir(_path)
 	logWriter, err := rotatelogs.New(
-		_path+"-%Y-%m-%d-%H-%M.log",
+		_path+"/log-%Y-%m-%d-%H-%M.log",
 		//rotatelogs.WithLinkName(d.path),
 		rotatelogs.WithMaxAge(time.Duration(_maxAge)*time.Hour),             // 文件最大保存时间
 		rotatelogs.WithRotationTime(time.Duration(_rotationTime)*time.Hour), // 日志切割时间间隔
