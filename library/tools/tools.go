@@ -24,6 +24,10 @@ import (
 	"time"
 )
 
+var (
+	Tools = New()
+)
+
 type Tool struct {
 }
 

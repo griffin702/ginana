@@ -25,7 +25,7 @@ func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache, eh *map[int]stri
 		db:   db,
 		mc:   mc,
 		eh:   eh,
-		tool: tools.New(),
+		tool: tools.Tools,
 	}
 	return
 }
