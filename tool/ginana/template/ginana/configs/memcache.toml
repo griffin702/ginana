@@ -1,0 +1,5 @@
+[Memcache]
+	addr = "127.0.0.1:11211"
+	idle = 10
+	timeout = "300ms"
+	cacheExpire = "24h"

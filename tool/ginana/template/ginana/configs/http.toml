@@ -1,0 +1,5 @@
+[Server]
+    addr = "127.0.0.1:8000"
+    readTimeout = "5s"
+    writeTimeout = "10s"
+    idleTimeout = "15s"

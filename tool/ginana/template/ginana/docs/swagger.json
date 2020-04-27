@@ -1,0 +1,99 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "基于iris的api服务，默认端口：8000",
+        "title": "GiNana",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0"
+        },
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1:8000",
+    "basePath": "/api",
+    "paths": {
+      "/users": {
+            "get": {
+              "description": "获取用户列表(分页)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                  "Users"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                      "description": "页码",
+                      "name": "page",
+                      "in": "query",
+                      "required": true
+                    },
+                  {
+                    "type": "integer",
+                    "description": "页码尺寸",
+                    "name": "pagesize",
+                    "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                      "description": "OK",
+                        "schema": {
+                          "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "500": {
+                      "description": "Internal Server Error",
+                        "schema": {
+                          "$ref": "#/definitions/resp.JSON"
+                        }
+                    }
+                }
+            }
+      }
+    },
+  "definitions": {
+    "model.User": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "is_auth": {
+          "type": "boolean"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "resp.JSON": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
+                }
+            }
+        }
+    }
+}

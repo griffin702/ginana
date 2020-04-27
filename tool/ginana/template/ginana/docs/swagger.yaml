@@ -1,0 +1,65 @@
+basePath: /api
+definitions:
+  model.User:
+    properties:
+      created_at:
+        type: integer
+      id:
+        type: integer
+      is_auth:
+        type: boolean
+      nickname:
+        type: string
+      updated_at:
+        type: integer
+      username:
+        type: string
+    type: object
+  resp.JSON:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
+host: 127.0.0.1:8000
+info:
+  contact: {}
+  description: 基于iris的api服务，默认端口：8000
+  license:
+    name: Apache 2.0
+  title: GiNana
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户列表(分页)
+      parameters:
+        - description: 页码
+          in: query
+          name: page
+          required: true
+          type: integer
+        - description: 页码尺寸
+          in: query
+          name: pagesize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/resp.JSON'
+      tags:
+        - Users
+swagger: "2.0"

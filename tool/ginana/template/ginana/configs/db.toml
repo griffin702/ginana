@@ -1,0 +1,13 @@
+[MySQL]
+	params = "timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Asia%2FShanghai&charset=utf8mb4,utf8"
+	driver = "mysql"
+	dbUser = "root"
+	dbPwd = "root"
+	dbHost = "127.0.0.1"
+	dbName = "ginana"
+	dbPort = "3306"
+	dbPrev = "w_"
+	debug = true
+	active = 20
+    idle = 10
+    idleTimeout ="4h"

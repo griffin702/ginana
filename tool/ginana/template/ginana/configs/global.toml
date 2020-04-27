@@ -1,0 +1,24 @@
+# Global 全局配置
+
+appName = "GiNana"
+
+version = "1.0.0"
+
+configIsLocal = true
+
+configPath = "../configs"
+
+# irisLogLevel: disable, fatal, error, warn, info, debug
+irisLogLevel = "debug"
+
+enableGzip = true
+
+enableTemplate = false
+
+reloadTemplate = false
+
+# ../views
+viewsPath = ""
+
+# static:../static static2:../static2
+staticDir = ""

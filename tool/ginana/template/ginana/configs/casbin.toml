@@ -1,0 +1,6 @@
+[Casbin]
+    model = "casbinmodel.conf"
+    enable = true
+    autoLoad = true
+    # 自动加载，单位(秒)
+    autoLoadInternal = 3600
