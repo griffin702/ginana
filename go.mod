@@ -35,7 +35,7 @@ require (
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/nats-io/nats-server/v2 v2.1.2 // indirect
-	github.com/philchia/agollo v2.1.0+incompatible
+	github.com/philchia/agollo v0.0.0-20190728085453-a95533fccea3
 	github.com/pkg/errors v0.8.1
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.4.2

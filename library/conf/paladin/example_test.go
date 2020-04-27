@@ -3,8 +3,8 @@ package paladin_test
 import (
 	"context"
 	"fmt"
-	"ginana/library/conf/paladin"
-	"ginana/library/conf/paladin/apollo"
+	"gitee.com/griffin702/ginana/library/conf/paladin"
+	"gitee.com/griffin702/ginana/library/conf/paladin/apollo"
 
 	"github.com/BurntSushi/toml"
 )

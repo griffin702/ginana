@@ -1,9 +1,9 @@
 package db
 
 import (
-	"ginana/internal/config"
-	"ginana/library/cache/memcache"
-	"ginana/library/conf/paladin"
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"gitee.com/griffin702/ginana/library/cache/memcache"
+	"gitee.com/griffin702/ginana/library/conf/paladin"
 )
 
 func NewMC(cfg *config.Config) (mc memcache.Memcache, err error) {

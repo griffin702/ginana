@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"ginana/library/conf/paladin/apollo/internal/mockserver"
+	"gitee.com/griffin702/ginana/library/conf/paladin/apollo/internal/mockserver"
 )
 
 func TestMain(m *testing.M) {

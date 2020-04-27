@@ -2,8 +2,8 @@ package database
 
 import (
 	"fmt"
-	"ginana/library/log"
-	xtime "ginana/library/time"
+	"gitee.com/griffin702/ginana/library/log"
+	xtime "gitee.com/griffin702/ginana/library/time"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"strings"
@@ -12,18 +12,18 @@ import (
 
 // Config mysql config.
 type SQLConfig struct {
-	Driver		string
-	DbUser		string
-	DbPwd		string
-	DbName		string
-	DbHost		string
-	DbPort		string
-	Params		string
-	DbPrev		string
-	Debug		bool
-	Active		int
-	Idle		int
-	IdleTimeout	xtime.Duration
+	Driver      string
+	DbUser      string
+	DbPwd       string
+	DbName      string
+	DbHost      string
+	DbPort      string
+	Params      string
+	DbPrev      string
+	Debug       bool
+	Active      int
+	Idle        int
+	IdleTimeout xtime.Duration
 }
 
 type ormLog struct{}
