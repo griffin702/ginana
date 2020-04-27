@@ -1,7 +1,7 @@
 # GiNana
 
 #### 介绍
-- 基于Iris + Gorm + Casbin + Paladin + Logrus + Wire 实现的API开发脚手架，目的是提供一套轻量级的开发框架，致力于结构清晰、方便、快速的完成业务需求的开发。
+- 基于Iris + Gorm + Casbin + Paladin + Logrus + Wire 实现的API开发脚手架工具集，目的是提供一套轻量级开发框架，致力于结构清晰、方便、快速的完成业务需求的开发。
 
 #### 软件架构
 整体参考bilibili开源的kratos架构，特此感谢其给予的宝贵灵感。
@@ -15,9 +15,14 @@
 
 #### 使用说明
 
-1.  开启mod模式，环境变量添加`GO111MODULE=on`，`GOPROXY=https://goproxy.baidu.com`，系统path环境变量添加`%GOPATH%\bin`
-2.  `$ go get -u gitee.com/griffin702/ginana/tool/ginana`
-3.  `$ ginana new demo`
+`Go version>=1.12` ，`GO111MODULE=on`，`GOPROXY=https://goproxy.baidu.com`。
+
+path环境变量添加`%GOPATH%\bin`。
+
+```git bash
+$ go get -u gitee.com/griffin702/ginana/tool/ginana
+$ ginana new demo
+```
 
 #### 参与贡献
 

@@ -15,9 +15,14 @@ Iris：一度在beego、gin等特性突出的框架中徘徊，最终胜出的�
 
 #### Instructions
 
-1.  开启mod模式，环境变量添加`GO111MODULE=on`，`GOPROXY=https://goproxy.baidu.com`，系统path环境变量添加`%GOPATH%\bin`
-2.  `$ go get -u gitee.com/griffin702/ginana/tool/ginana`
-3.  `$ ginana new demo`
+`Go version>=1.12` ，`GO111MODULE=on`，`GOPROXY=https://goproxy.baidu.com`。
+
+path环境变量添加`%GOPATH%\bin`。
+
+```git bash
+$ go get -u gitee.com/griffin702/ginana/tool/ginana
+$ ginana new demo
+```
 
 #### Contribution
 
