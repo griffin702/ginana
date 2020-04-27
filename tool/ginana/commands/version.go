@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version   = "v1.1.2"
+	Version   = "v1.1.3"
 	BuildTime = tools.Tools.TimeFormat(time.Now(), "Y-m-d H:i:s")
 )
 
@@ -34,6 +34,6 @@ func GetVersion() string {
 		Arch:      runtime.GOARCH,
 	}
 	tmpl, _ := template.New("version").Parse(versionTemplate)
-	tmpl.Execute(&doc, vo)
+	_ = tmpl.Execute(&doc, vo)
 	return doc.String()
 }

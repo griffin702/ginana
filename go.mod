@@ -43,7 +43,7 @@ require (
 	github.com/swaggo/swag v1.6.3
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/ulricqin/goutils v0.0.0-20141016093831-470e8f553458
-	github.com/urfave/cli/v2 v2.0.0
+	github.com/urfave/cli/v2 v2.1.1
 	github.com/valyala/fasthttp v1.5.0 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0 // indirect
