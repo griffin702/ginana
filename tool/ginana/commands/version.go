@@ -2,14 +2,14 @@ package commands
 
 import (
 	"bytes"
-	"gitee.com/griffin702/service/tools"
+	"github.com/griffin702/service/tools"
 	"runtime"
 	"text/template"
 	"time"
 )
 
 var (
-	Version   = "v1.1.1"
+	Version   = "v1.1.2"
 	BuildTime = tools.Tools.TimeFormat(time.Now(), "Y-m-d H:i:s")
 )
 

@@ -1,9 +1,8 @@
-module gitee.com/griffin702/ginana
+module github.com/griffin702/ginana
 
 go 1.13
 
 require (
-	gitee.com/griffin702/service v1.0.4
 	github.com/BurntSushi/toml v0.3.1
 	github.com/CloudyKit/fastprinter v0.0.0-20170127035650-74b38d55f37a // indirect
 	github.com/ajg/form v1.5.1 // indirect
@@ -20,6 +19,7 @@ require (
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/uuid v1.1.1
+	github.com/griffin702/service v1.0.5
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/middleware/cors v0.0.0-20191219204441-78279b78a367
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect

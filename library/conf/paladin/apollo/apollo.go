@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"gitee.com/griffin702/ginana/library/conf/paladin"
+	"github.com/griffin702/ginana/library/conf/paladin"
 	"github.com/philchia/agollo"
 )
 

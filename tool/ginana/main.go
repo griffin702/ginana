@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitee.com/griffin702/ginana/tool/ginana/commands"
+	"github.com/griffin702/ginana/tool/ginana/commands"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"

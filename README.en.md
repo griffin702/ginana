@@ -20,7 +20,7 @@ Iris：一度在beego、gin等特性突出的框架中徘徊，最终胜出的�
 path环境变量添加`%GOPATH%\bin`。
 
 ```git bash
-$ go get -u gitee.com/griffin702/ginana/tool/ginana
+$ go get -u github.com/griffin702/ginana/tool/ginana
 $ ginana new demo
 ```
 

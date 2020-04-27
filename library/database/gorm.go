@@ -2,9 +2,9 @@ package database
 
 import (
 	"fmt"
-	"gitee.com/griffin702/ginana/library/log"
-	xtime "gitee.com/griffin702/ginana/library/time"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/griffin702/ginana/library/log"
+	xtime "github.com/griffin702/ginana/library/time"
 	"github.com/jinzhu/gorm"
 	"strings"
 	"time"

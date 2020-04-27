@@ -2,8 +2,8 @@ package memcache
 
 import (
 	"encoding/json"
-	xtime "gitee.com/griffin702/ginana/library/time"
 	mc "github.com/bradfitz/gomemcache/memcache"
+	xtime "github.com/griffin702/ginana/library/time"
 	"reflect"
 	"time"
 )

@@ -7,7 +7,7 @@ var toolIndexs = []*Tool{
 		Name:      "ginana",
 		Alias:     "ginana",
 		BuildTime: time.Date(2020, 3, 31, 0, 0, 0, 0, time.Local),
-		Install:   "go get -u gitee.com/griffin702/ginana/tool/ginana@" + Version,
+		Install:   "go get -u github.com/griffin702/ginana/tool/ginana@" + Version,
 		Summary:   "工具集",
 		Platform:  []string{"darwin", "linux", "windows"},
 		Author:    "ginana",

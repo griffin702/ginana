@@ -5,4 +5,4 @@
 // and any other packr generated files.
 package commands
 
-import _ "gitee.com/griffin702/ginana/tool/ginana/commands/packrd"
+import _ "github.com/griffin702/ginana/tool/ginana/commands/packrd"
