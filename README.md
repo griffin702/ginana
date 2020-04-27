@@ -15,9 +15,9 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  go get -u gitee.com/griffin702/ginana/tool/ginana
+2.  确认GOPATH相关环境变量都已设置好，%GOPATH%\bin目录添加至系统环境变量path中
+3.  ginana new {{ ProName }}
 
 #### 参与贡献
 
