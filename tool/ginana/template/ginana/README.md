@@ -15,9 +15,14 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+`Go version>=1.12` ，`GO111MODULE=on`，`GOPROXY=https://goproxy.baidu.com`。
+
+path环境变量添加`%GOPATH%\bin`。
+
+```git bash
+$ go get -u gitee.com/griffin702/ginana/tool/ginana
+$ ginana new demo
+```
 
 #### 参与贡献
 

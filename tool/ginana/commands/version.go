@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version   = "v1.0.11"
+	Version   = "v1.0.12"
 	BuildTime = tools.Tools.TimeFormat(time.Now(), "Y-m-d H:i:s")
 )
 
