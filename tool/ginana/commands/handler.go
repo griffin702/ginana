@@ -9,6 +9,11 @@ import (
 
 func RunNew() cli.ActionFunc {
 	return func(ctx *cli.Context) (err error) {
+		for _, t := range toolList() {
+			if !t.installed() || t.needUpdated() {
+				t.install()
+			}
+		}
 		f.Name = ctx.Args().First()
 		if f.Path != "" {
 			if f.Path, err = filepath.Abs(f.Path); err != nil {

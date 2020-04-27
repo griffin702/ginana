@@ -18,6 +18,7 @@ var svcProvider = wire.NewSet(service.NewErrHelper, service.New, db.NewCasbin)
 var cProvider = wire.NewSet(api.New)
 var httpProvider = wire.NewSet(router.InitRouter, server.NewHttpServer)
 
+//go:generate wire
 func InitApp() (*App, func(), error) {
 	panic(wire.Build(
 		initProvider,

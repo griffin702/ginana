@@ -11,7 +11,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "GiNana"
 	app.Usage = "工具集"
-	app.Version = getVersion()
+	app.Version = commands.GetVersion()
 	app.Authors = []*cli.Author{{
 		Name:  "WuYun",
 		Email: "117976509@qq.com",

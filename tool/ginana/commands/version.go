@@ -1,4 +1,4 @@
-package main
+package commands
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version   = "v1.0.7"
+	Version   = "v1.0.8"
 	BuildTime = tools.Tools.TimeFormat(time.Now(), "Y-m-d H:i:s")
 )
 
@@ -24,7 +24,7 @@ type VersionOptions struct {
 
 var versionTemplate = `Version: {{.Version}} | Go version: {{.GoVersion}} | BuildTime: {{.BuildTime}} | OS/Arch: {{.Os}}/{{.Arch}}`
 
-func getVersion() string {
+func GetVersion() string {
 	var doc bytes.Buffer
 	vo := VersionOptions{
 		Version:   Version,

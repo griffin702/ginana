@@ -7,26 +7,25 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/CloudyKit/fastprinter v0.0.0-20170127035650-74b38d55f37a // indirect
 	github.com/ajg/form v1.5.1 // indirect
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bradfitz/gomemcache v0.0.0-20190329173943-551aad21a668
 	github.com/casbin/casbin/v2 v2.2.2
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
+	github.com/fatih/color v1.7.0
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobuffalo/logger v1.0.3 // indirect
 	github.com/gobuffalo/packr/v2 v2.7.1
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/uuid v1.1.1
-	github.com/google/wire v0.4.0
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/middleware/cors v0.0.0-20191219204441-78279b78a367
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.11
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
-	github.com/kataras/golog v0.0.10
 	github.com/kataras/iris/v12 v12.1.2
 	github.com/lestrrat/go-envload v0.0.0-20180220120943-6ed08b54a570 // indirect
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
@@ -34,7 +33,6 @@ require (
 	github.com/llgcode/draw2d v0.0.0-20200110163050-b96d8208fcfc
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/nats-io/nats-server/v2 v2.1.2 // indirect
 	github.com/philchia/agollo v0.0.0-20190728085453-a95533fccea3
 	github.com/pkg/errors v0.8.1
 	github.com/sergi/go-diff v1.0.0 // indirect
