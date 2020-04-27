@@ -11,6 +11,7 @@ func RunNew() cli.ActionFunc {
 	return func(ctx *cli.Context) (err error) {
 		for _, t := range toolList() {
 			if !t.installed() || t.needUpdated() {
+				fmt.Println(t.Install)
 				t.install()
 			}
 		}

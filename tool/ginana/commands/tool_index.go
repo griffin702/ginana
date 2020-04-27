@@ -20,4 +20,12 @@ var toolIndexs = []*Tool{
 		Platform:  []string{"darwin", "linux", "windows"},
 		Author:    "google",
 	},
+	{
+		Name:      "packr2",
+		Alias:     "packr2",
+		BuildTime: time.Date(2020, 3, 31, 0, 0, 0, 0, time.Local),
+		Install:   "go get -u github.com/gobuffalo/packr/v2/packr2",
+		Platform:  []string{"darwin", "linux", "windows"},
+		Author:    "gobuffalo",
+	},
 }
