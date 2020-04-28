@@ -22,6 +22,8 @@ path环境变量添加`%GOPATH%\bin`。
 ```git bash
 $ go get -u github.com/griffin702/ginana/tool/ginana
 $ ginana new demo
+$ cd demo
+$ ginana run
 ```
 
 #### Contribution
