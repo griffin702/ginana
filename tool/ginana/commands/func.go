@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -104,4 +105,20 @@ func parse(s string) ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
+}
+
+func buildDir(base string, cmd string, n int) string {
+	dirs, err := ioutil.ReadDir(base)
+	if err != nil {
+		panic(err)
+	}
+	for _, d := range dirs {
+		if d.IsDir() && d.Name() == cmd {
+			return path.Join(base, cmd)
+		}
+	}
+	if n <= 1 {
+		return base
+	}
+	return buildDir(filepath.Dir(base), cmd, n-1)
 }

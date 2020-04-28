@@ -11,8 +11,18 @@ func InitCommands() []*cli.Command {
 			Name:    "new",
 			Aliases: []string{"n"},
 			Usage:   "创建新项目",
-			Flags:   f.ToRunNew(),
-			Action:  RunNew(),
+			Flags:   f.ToNewAction(),
+			Action:  NewAction(),
+		},
+		{
+			Name:   "build",
+			Usage:  "ginana build",
+			Action: BuildAction,
+		},
+		{
+			Name:   "run",
+			Usage:  "ginana run",
+			Action: RunAction,
 		},
 	}
 }

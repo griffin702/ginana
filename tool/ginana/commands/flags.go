@@ -10,7 +10,7 @@ type Flags struct {
 
 var f *Flags
 
-func (f *Flags) ToRunNew() []cli.Flag {
+func (f *Flags) ToNewAction() []cli.Flag {
 	return []cli.Flag{
 		&cli.StringFlag{
 			Name:        "d",
