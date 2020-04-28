@@ -15,14 +15,16 @@ func InitCommands() []*cli.Command {
 			Action:  NewAction(),
 		},
 		{
-			Name:   "build",
-			Usage:  "ginana build",
-			Action: BuildAction,
+			Name:            "build",
+			Usage:           "ginana build",
+			Action:          BuildAction,
+			SkipFlagParsing: true,
 		},
 		{
-			Name:   "run",
-			Usage:  "ginana run",
-			Action: RunAction,
+			Name:            "run",
+			Usage:           "ginana run",
+			Action:          RunAction,
+			SkipFlagParsing: true,
 		},
 	}
 }

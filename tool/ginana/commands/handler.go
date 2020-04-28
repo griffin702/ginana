@@ -41,9 +41,9 @@ func NewAction() cli.ActionFunc {
 func BuildAction(c *cli.Context) error {
 	base, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return err
 	}
-	args := append([]string{"build"}, c.Args().Slice()...)
+	args := append([]string{"build", "-i"}, c.Args().Slice()...)
 	cmd := exec.Command("go", args...)
 	cmd.Dir = buildDir(base, "cmd", 5)
 	cmd.Stdout = os.Stdout
@@ -51,7 +51,7 @@ func BuildAction(c *cli.Context) error {
 	fmt.Printf("directory: %s\n", cmd.Dir)
 	fmt.Printf("ginana: %s\n", Version)
 	if err := cmd.Run(); err != nil {
-		panic(err)
+		return err
 	}
 	fmt.Println("build success.")
 	return nil
@@ -60,7 +60,7 @@ func BuildAction(c *cli.Context) error {
 func RunAction(c *cli.Context) error {
 	base, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return err
 	}
 	dir := buildDir(base, "cmd", 5)
 	//conf := path.Join(filepath.Dir(dir), "configs")
@@ -71,7 +71,7 @@ func RunAction(c *cli.Context) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		panic(err)
+		return err
 	}
 	return nil
 }
