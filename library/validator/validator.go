@@ -12,12 +12,14 @@ type Validator interface {
 	Engine() interface{}
 }
 
+func NewValidator() Validator {
+	return &defaultValidator{}
+}
+
 type defaultValidator struct {
 	once     sync.Once
 	validate *validator.Validate
 }
-
-var _ Validator = &defaultValidator{}
 
 // ValidateStruct receives any kind of type, but only performed struct or pointer to struct type.
 func (v *defaultValidator) ValidateStruct(obj interface{}) error {
