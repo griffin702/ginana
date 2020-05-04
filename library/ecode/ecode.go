@@ -61,13 +61,14 @@ func Errorf(code int, args ...interface{}) *ecode {
 }
 
 // Cause cause from error to ecode.
-func Cause(e error) ECode {
+func Cause(e interface{}) ECode {
 	if e == nil {
 		return &ecode{code: 0}
 	}
-	ec, ok := errors.Cause(e).(ECode)
+	err := e.(error)
+	ec, ok := errors.Cause(err).(ECode)
 	if ok {
 		return ec
 	}
-	return &ecode{code: 500, message: e.Error()}
+	return &ecode{code: 500, message: err.Error()}
 }
