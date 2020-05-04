@@ -1,27 +1,61 @@
 basePath: /api
 definitions:
-  model.User:
-    properties:
-      created_at:
-        type: integer
-      id:
-        type: integer
-      is_auth:
-        type: boolean
-      nickname:
-        type: string
-      updated_at:
-        type: integer
-      username:
-        type: string
-    type: object
-  resp.JSON:
+  model.JSON:
     properties:
       code:
         type: integer
       data:
         type: object
       message:
+        type: string
+    type: object
+  model.Policy:
+    properties:
+      id:
+        type: integer
+      method:
+        type: string
+      router:
+        type: string
+    type: object
+  model.Role:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      policys:
+        items:
+          $ref: '#/definitions/model.Policy'
+        type: array
+      role_name:
+        type: string
+    type: object
+  model.User:
+    properties:
+      avatar:
+        type: string
+      count_login:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_auth:
+        type: boolean
+      last_login:
+        type: string
+      last_login_ip:
+        type: string
+      nickname:
+        type: string
+      roles:
+        items:
+          $ref: '#/definitions/model.Role'
+        type: array
+      updated_at:
+        type: string
+      username:
         type: string
     type: object
 host: 127.0.0.1:8000
@@ -33,11 +67,11 @@ info:
   title: GiNana
   version: 1.0.0
 paths:
-  /users:
+  /hello:
     get:
       consumes:
-      - application/json
-      description: 获取用户列表(分页)
+        - application/json
+      description: Hello
       parameters:
         - description: 页码
           in: query
@@ -47,10 +81,10 @@ paths:
         - description: 页码尺寸
           in: query
           name: pagesize
-        required: true
-        type: integer
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -59,7 +93,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/resp.JSON'
+            $ref: '#/definitions/model.JSON'
       tags:
-        - Users
+        - Hello
 swagger: "2.0"

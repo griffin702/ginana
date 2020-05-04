@@ -7,23 +7,19 @@ import (
 	"{{.ModPrefix}}{{.Name}}/internal/config"
 	"{{.ModPrefix}}{{.Name}}/internal/db"
 	"{{.ModPrefix}}{{.Name}}/internal/server"
-	"{{.ModPrefix}}{{.Name}}/internal/server/controller/api"
-	"{{.ModPrefix}}{{.Name}}/internal/server/router"
 	"{{.ModPrefix}}{{.Name}}/internal/service"
 	"github.com/google/wire"
 )
 
 var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewMC)
-var svcProvider = wire.NewSet(service.NewErrHelper, service.New, db.NewCasbin)
-var cProvider = wire.NewSet(api.New)
-var httpProvider = wire.NewSet(router.InitRouter, server.NewHttpServer)
+var svcProvider = wire.NewSet(service.NewHelperMap, service.New, db.NewCasbin)
+var httpProvider = wire.NewSet(server.InitRouter, server.NewHttpServer)
 
 //go:generate wire
 func InitApp() (*App, func(), error) {
 	panic(wire.Build(
 		initProvider,
 		svcProvider,
-		cProvider,
 		httpProvider,
 		NewApp,
 	))

@@ -2,13 +2,12 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"github.com/casbin/casbin/v2"
 	"github.com/griffin702/ginana/library/cache/memcache"
 	"github.com/griffin702/ginana/library/database"
 	"github.com/griffin702/ginana/library/tools"
-	"github.com/casbin/casbin/v2"
 	"github.com/jinzhu/gorm"
 )
 
@@ -19,12 +18,12 @@ type Service interface {
 	GetEFUsers(ctx context.Context) (users []*database.EFUseRole, err error)
 }
 
-func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache, eh *map[int]string) (s Service, err error) {
+func New(cfg *config.Config, db *gorm.DB, mc memcache.Memcache, hm HelperMap) (s Service, err error) {
 	s = &service{
 		cfg:  cfg,
 		db:   db,
 		mc:   mc,
-		eh:   eh,
+		hm:   hm,
 		tool: tools.Tools,
 	}
 	return
@@ -35,24 +34,12 @@ type service struct {
 	db   *gorm.DB
 	ef   *casbin.SyncedEnforcer
 	mc   memcache.Memcache
-	eh   *map[int]string
+	hm   HelperMap
 	tool *tools.Tool
 }
 
 func (s *service) Close() {
 	_ = s.db.Close()
-}
-
-func (s *service) GetError(i int, args ...string) (int, error) {
-	if len(args) > 1 {
-		panic("too many arguments")
-	}
-	errHelper := *s.eh
-	msg := errHelper[i]
-	if len(args) == 1 {
-		msg = args[0]
-	}
-	return i, errors.New(msg)
 }
 
 // Close close the resource.

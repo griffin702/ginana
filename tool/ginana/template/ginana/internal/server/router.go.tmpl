@@ -1,0 +1,22 @@
+package router
+
+import (
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"{{.ModPrefix}}{{.Name}}/internal/controller/api"
+	"{{.ModPrefix}}{{.Name}}/internal/service"
+	"github.com/griffin702/ginana/library/mdw"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
+)
+
+func InitRouter(svc service.Service, cfg *config.Config) (e *iris.Application, err error) {
+	e = newIris(cfg)
+	//sessManager := sessions.New(sessions.Config{
+	//	Cookie:  "GiNana_Session",
+	//	Expires: 24 * time.Hour,
+	//})
+	apiParty := mvc.New(e.Party("/hello", mdw.CORS([]string{"*"})).AllowMethods(iris.MethodOptions))
+	apiParty.Register(svc, getPagination)
+	apiParty.Handle(new(api.CApi))
+	return
+}

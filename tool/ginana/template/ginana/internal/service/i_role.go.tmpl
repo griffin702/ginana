@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"{{.ModPrefix}}{{.Name}}/internal/model"
 	"github.com/griffin702/ginana/library/database"
 	"github.com/griffin702/ginana/library/ecode"
@@ -38,17 +37,17 @@ func (s *service) GetEFRoles(c context.Context) (roles []*database.EFRolePolicy,
 }
 
 func (s *service) GetRole(ctx context.Context, id int64) (role *model.Role, err error) {
-	key := fmt.Sprintf("role_%d", id)
+	key := s.hm.GetCacheKey(2, id)
 	role = new(model.Role)
 	err = s.mc.Get(key, role)
 	if err != nil {
 		role.ID = id
 		if err = s.db.Find(role).Related(&role.Policys, "Policys").Error; err != nil {
-			err = ecode.Errorf(s.GetError(1001, err.Error()))
+			err = ecode.Errorf(s.hm.GetError(1001, err))
 			return
 		}
 		if err = s.mc.Set(key, role); err != nil {
-			err = ecode.Errorf(s.GetError(1002, err.Error()))
+			err = ecode.Errorf(s.hm.GetError(1002, err))
 			return
 		}
 	}
