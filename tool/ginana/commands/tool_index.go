@@ -28,4 +28,12 @@ var toolIndexs = []*Tool{
 		Platform:  []string{"darwin", "linux", "windows"},
 		Author:    "gobuffalo",
 	},
+	{
+		Name:      "swag",
+		Alias:     "swag",
+		BuildTime: time.Date(2020, 3, 31, 0, 0, 0, 0, time.Local),
+		Install:   "go get -u github.com/swaggo/swag/cmd/swag",
+		Platform:  []string{"darwin", "linux", "windows"},
+		Author:    "swaggo",
+	},
 }
