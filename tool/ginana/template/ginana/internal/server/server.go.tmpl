@@ -94,7 +94,7 @@ func initStaticDir(e *iris.Application, cfg *config.Config) {
 
 // template function
 func dateFormat(t time.Time, format string) (template.HTML, error) {
-	return template.HTML(tools.New().TimeFormat(&t, format)), nil
+	return template.HTML(tools.New().TimeFormat(t, format)), nil
 }
 
 func str2html(str string) (template.HTML, error) {
