@@ -56,7 +56,7 @@ func (e *ecode) Message() string {
 func Errorf(code int, args ...interface{}) *ecode {
 	message := ""
 	if len(args) > 0 {
-		message = fmt.Sprintf(strings.Repeat("%v ", len(args)), args...)
+		message = fmt.Sprintf(strings.TrimSpace(strings.Repeat("%v ", len(args))), args...)
 	}
 	return &ecode{code: code, message: message}
 }
