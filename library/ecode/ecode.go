@@ -3,6 +3,7 @@ package ecode
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync/atomic"
@@ -65,7 +66,13 @@ func Cause(e interface{}) ECode {
 	if e == nil {
 		return &ecode{code: 0}
 	}
-	err := e.(error)
+	if str, ok := e.(string); ok {
+		return &ecode{code: 500, message: str}
+	}
+	err, ok := e.(error)
+	if !ok {
+		return &ecode{code: 500, message: reflect.TypeOf(e).Name()}
+	}
 	ec, ok := errors.Cause(err).(ECode)
 	if ok {
 		return ec
