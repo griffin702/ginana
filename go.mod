@@ -11,7 +11,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobuffalo/packr/v2 v2.7.1
-	github.com/griffin702/service v1.1.1
+	github.com/griffin702/service v1.1.2
 	github.com/iris-contrib/middleware/cors v0.0.0-20191219204441-78279b78a367
 	github.com/jinzhu/gorm v1.9.11
 	github.com/kataras/iris/v12 v12.1.2
