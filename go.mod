@@ -9,6 +9,7 @@ require (
 	github.com/bradfitz/gomemcache v0.0.0-20190329173943-551aad21a668
 	github.com/casbin/casbin/v2 v2.2.2
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fatih/color v1.7.0
