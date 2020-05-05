@@ -160,6 +160,8 @@ github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/ad
 github.com/griffin702/ginana v1.3.6/go.mod h1:C04CvNxWTjUkblqreWp/Rd2OJNIJ3pvv++afjhAE7wY=
 github.com/griffin702/service v1.1.5 h1:La1QZkfQ76SaS1WeQSrbE6ugakFkkKs6PEtvE6dEiyI=
 github.com/griffin702/service v1.1.5/go.mod h1:bQa/RQeP+D9c6rcHg4gZF3hR0WZISfHZu1GvqhAhJAI=
+github.com/griffin702/service v1.1.6 h1:kHP/b4gseJ1RJXMg5IFsdIhPVPi3iCu+zoxOn8WWEcA=
+github.com/griffin702/service v1.1.6/go.mod h1:bQa/RQeP+D9c6rcHg4gZF3hR0WZISfHZu1GvqhAhJAI=
 github.com/hashicorp/go-version v1.2.0/go.mod h1:fltr4n8CU8Ke44wwGCBoEymUuxUHl09ZGVZPK5anwXA=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
