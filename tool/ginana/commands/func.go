@@ -70,9 +70,6 @@ func create() (err error) {
 			return
 		}
 	}
-	if err = generate("./..."); err != nil {
-		return
-	}
 	if err = generate("./internal/wire/wire.go"); err != nil {
 		return
 	}
@@ -80,7 +77,7 @@ func create() (err error) {
 }
 
 func generate(path string) error {
-	cmd := exec.Command("go", "generate", "-x", path)
+	cmd := exec.Command("go", "generate", path)
 	cmd.Dir = f.Path
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
