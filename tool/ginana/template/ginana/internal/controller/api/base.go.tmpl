@@ -22,7 +22,7 @@ type CApi struct {
 // @Success 200 {object} model.User
 // @Failure 500 {object} model.JSON
 // @Router /hello [get]
-func (c *CApi) Get() {
+func (c *CApi) GetHello() {
 	data := model.GiNana{
 		Hello: "Hello GiNana!",
 	}
