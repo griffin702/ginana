@@ -26,6 +26,8 @@ $ cd demo
 $ ginana run
 ```
 
+浏览器访问：`http://localhost:8000/api/hello`
+
 #### 参与贡献
 
 1. Fork 本仓库
