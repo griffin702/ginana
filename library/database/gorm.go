@@ -3,9 +3,10 @@ package database
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/griffin702/ginana/library/log"
+	glog "github.com/griffin702/ginana/library/log"
 	xtime "github.com/griffin702/ginana/library/time"
 	"github.com/jinzhu/gorm"
+	"log"
 	"strings"
 	"time"
 )
@@ -29,7 +30,7 @@ type SQLConfig struct {
 type ormLog struct{}
 
 func (l ormLog) Print(v ...interface{}) {
-	log.Infof(strings.Repeat("%v ", len(v)), v...)
+	glog.Infof(strings.Repeat("%v ", len(v)), v...)
 }
 
 // NewMySQL new db and retry connection when has error.
@@ -37,7 +38,7 @@ func NewMySQL(c *SQLConfig) (db *gorm.DB, err error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", c.DbUser, c.DbPwd, c.DbHost, c.DbPort, c.DbName, c.Params)
 	db, err = gorm.Open(c.Driver, dsn)
 	if err != nil {
-		log.Errorf("db dsn(%s) error: %v", dsn, err)
+		log.Printf("db dsn(%s) error: %v", dsn, err)
 		return
 	}
 	if c.DbPrev != "" {
@@ -49,7 +50,9 @@ func NewMySQL(c *SQLConfig) (db *gorm.DB, err error) {
 	db.DB().SetMaxIdleConns(c.Idle)
 	db.DB().SetMaxOpenConns(c.Active)
 	db.DB().SetConnMaxLifetime(time.Duration(c.IdleTimeout) / time.Second)
-	db.SetLogger(ormLog{})
+	if glog.GetLogger() != nil {
+		db.SetLogger(ormLog{})
+	}
 	// 创建和更新时间钩子
 	//db.Callback().Create().Replace("gorm:update_time_stamp",updateTimeStampForCreateCallback)
 	//db.Callback().Update().Replace("gorm:update_time_stamp",updateTimeStampForUpdateCallback)
