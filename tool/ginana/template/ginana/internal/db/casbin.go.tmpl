@@ -2,13 +2,14 @@ package db
 
 import (
 	"context"
-	"{{.ModPrefix}}{{.Name}}/internal/config"
-	"{{.ModPrefix}}{{.Name}}/internal/service"
 	"github.com/casbin/casbin/v2"
 	"github.com/griffin702/ginana/library/conf/paladin"
 	"github.com/griffin702/ginana/library/database"
 	"github.com/griffin702/ginana/library/log"
 	"time"
+
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"{{.ModPrefix}}{{.Name}}/internal/service"
 )
 
 // NewCasbin after Service, and SetEnforcer for service

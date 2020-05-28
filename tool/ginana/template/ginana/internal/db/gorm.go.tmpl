@@ -1,11 +1,12 @@
 package db
 
 import (
-	"{{.ModPrefix}}{{.Name}}/internal/config"
-	"{{.ModPrefix}}{{.Name}}/internal/model"
 	"github.com/griffin702/ginana/library/conf/paladin"
 	"github.com/griffin702/ginana/library/database"
 	"github.com/jinzhu/gorm"
+
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"{{.ModPrefix}}{{.Name}}/internal/model"
 )
 
 func NewDB(cfg *config.Config) (db *gorm.DB, err error) {

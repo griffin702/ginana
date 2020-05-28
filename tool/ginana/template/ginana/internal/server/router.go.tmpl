@@ -1,12 +1,13 @@
 package server
 
 import (
-	"{{.ModPrefix}}{{.Name}}/internal/config"
-	"{{.ModPrefix}}{{.Name}}/internal/controller/api"
-	"{{.ModPrefix}}{{.Name}}/internal/service"
 	"github.com/griffin702/ginana/library/mdw"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
+
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"{{.ModPrefix}}{{.Name}}/internal/controller/api"
+	"{{.ModPrefix}}{{.Name}}/internal/service"
 )
 
 func InitRouter(svc service.Service, cfg *config.Config) (e *iris.Application, err error) {

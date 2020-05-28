@@ -2,10 +2,11 @@ package service
 
 import (
 	"context"
-	"{{.ModPrefix}}{{.Name}}/internal/model"
 	"github.com/griffin702/ginana/library/database"
 	"github.com/griffin702/ginana/library/ecode"
 	"sync"
+
+	"{{.ModPrefix}}{{.Name}}/internal/model"
 )
 
 func (s *service) GetEFUsers(c context.Context) (users []*database.EFUseRole, err error) {

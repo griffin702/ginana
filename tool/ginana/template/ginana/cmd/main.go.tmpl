@@ -8,9 +8,10 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
+
 	"{{.ModPrefix}}{{.Name}}/internal/config"
 	"{{.ModPrefix}}{{.Name}}/internal/wire"
-	"time"
 )
 
 // @title GiNana
@@ -21,7 +22,6 @@ import (
 // @license.name MIT License
 // @license.url
 func main() {
-	flag.Parse()
 	closeLog := log.Init()
 	log.Info("GiNana App Start")
 	cfg, err := config.GetBaseConfig()

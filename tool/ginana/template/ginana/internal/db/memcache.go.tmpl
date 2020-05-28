@@ -1,9 +1,10 @@
 package db
 
 import (
-	"{{.ModPrefix}}{{.Name}}/internal/config"
 	"github.com/griffin702/ginana/library/cache/memcache"
 	"github.com/griffin702/ginana/library/conf/paladin"
+
+	"{{.ModPrefix}}{{.Name}}/internal/config"
 )
 
 func NewMC(cfg *config.Config) (mc memcache.Memcache, err error) {

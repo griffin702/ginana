@@ -4,11 +4,12 @@
 package wire
 
 import (
+	"github.com/google/wire"
+
 	"{{.ModPrefix}}{{.Name}}/internal/config"
 	"{{.ModPrefix}}{{.Name}}/internal/db"
 	"{{.ModPrefix}}{{.Name}}/internal/server"
 	"{{.ModPrefix}}{{.Name}}/internal/service"
-	"github.com/google/wire"
 )
 
 var initProvider = wire.NewSet(config.NewConfig, db.NewDB, db.NewMC)

@@ -2,8 +2,6 @@ package server
 
 import (
 	"fmt"
-	"{{.ModPrefix}}{{.Name}}/internal/config"
-	"{{.ModPrefix}}{{.Name}}/internal/model"
 	"github.com/griffin702/ginana/library/conf/paladin"
 	"github.com/griffin702/ginana/library/log"
 	"github.com/griffin702/ginana/library/mdw"
@@ -16,6 +14,9 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"{{.ModPrefix}}{{.Name}}/internal/config"
+	"{{.ModPrefix}}{{.Name}}/internal/model"
 )
 
 func NewHttpServer(irisApp *iris.Application, cfg *config.Config) (h *http.Server, err error) {
