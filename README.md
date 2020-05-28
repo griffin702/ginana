@@ -26,7 +26,7 @@ $ cd demo
 $ ginana run
 ```
 
-浏览器访问：`http://localhost:8000/api/hello`
+浏览器访问：`http://127.0.0.1:8000/api/hello`
 
 #### 参与贡献
 
