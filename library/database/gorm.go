@@ -34,7 +34,10 @@ func (l ormLog) Print(v ...interface{}) {
 }
 
 // NewMySQL new db and retry connection when has error.
-func NewMySQL(c *SQLConfig) (db *gorm.DB, err error) {
+func NewMySQL(c *SQLConfig, noDBName ...bool) (db *gorm.DB, err error) {
+	if len(noDBName) > 0 && noDBName[0] {
+		c.DbName = ""
+	}
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", c.DbUser, c.DbPwd, c.DbHost, c.DbPort, c.DbName, c.Params)
 	db, err = gorm.Open(c.Driver, dsn)
 	if err != nil {
@@ -52,6 +55,9 @@ func NewMySQL(c *SQLConfig) (db *gorm.DB, err error) {
 	db.DB().SetConnMaxLifetime(time.Duration(c.IdleTimeout) / time.Second)
 	if glog.GetLogger() != nil {
 		db.SetLogger(ormLog{})
+	}
+	if c.Debug {
+		db.Debug()
 	}
 	// 创建和更新时间钩子
 	//db.Callback().Create().Replace("gorm:update_time_stamp",updateTimeStampForCreateCallback)
