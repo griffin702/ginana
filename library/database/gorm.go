@@ -57,7 +57,7 @@ func NewMySQL(c *SQLConfig, noDBName ...bool) (db *gorm.DB, err error) {
 		db.SetLogger(ormLog{})
 	}
 	if c.Debug {
-		db.Debug()
+		db = db.Debug()
 	}
 	// 创建和更新时间钩子
 	//db.Callback().Create().Replace("gorm:update_time_stamp",updateTimeStampForCreateCallback)
