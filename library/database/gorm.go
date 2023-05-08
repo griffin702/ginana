@@ -30,7 +30,7 @@ type SQLConfig struct {
 type ormLog struct{}
 
 func (l ormLog) Print(v ...interface{}) {
-	glog.Infof(strings.Repeat("%v ", len(v)), v...)
+	glog.Debugf(strings.Repeat("%v\n", len(v)), v...)
 }
 
 // NewMySQL new db and retry connection when has error.
