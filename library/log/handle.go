@@ -22,7 +22,7 @@ type Logger interface {
 
 func init() {
 	_level = 5
-	_path = "../logs"
+	_path = "logs"
 	_maxAge = 7 * 24
 	_rotationTime = 24
 }
