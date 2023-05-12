@@ -23,7 +23,7 @@ func New(cfg *Config) Memcache {
 	client.Timeout = time.Duration(cfg.Timeout)
 	return &memcache{
 		client:      client,
-		cacheExpire: int32(time.Duration(cfg.CacheExpire) / time.Second),
+		cacheExpire: int32(time.Duration(cfg.CacheExpire).Seconds()),
 	}
 }
 
@@ -95,7 +95,7 @@ func (m *memcache) Set(key string, v interface{}, expire ...string) (err error) 
 		if err != nil {
 			return err
 		}
-		m.cacheExpire = int32(temp)
+		m.cacheExpire = int32(temp.Seconds())
 	}
 	value, err := m.encode(v)
 	if err != nil {
@@ -118,7 +118,7 @@ func (m *memcache) Add(key string, v interface{}, expire ...string) (err error) 
 		if err != nil {
 			return err
 		}
-		m.cacheExpire = int32(temp)
+		m.cacheExpire = int32(temp.Seconds())
 	}
 	value, err := m.encode(v)
 	if err != nil {
@@ -141,7 +141,7 @@ func (m *memcache) Replace(key string, v interface{}, expire ...string) (err err
 		if err != nil {
 			return err
 		}
-		m.cacheExpire = int32(temp)
+		m.cacheExpire = int32(temp.Seconds())
 	}
 	value, err := m.encode(v)
 	if err != nil {
