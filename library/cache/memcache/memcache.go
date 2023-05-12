@@ -5,6 +5,7 @@ import (
 	mc "github.com/bradfitz/gomemcache/memcache"
 	xtime "github.com/griffin702/ginana/library/time"
 	"reflect"
+	"sync"
 	"time"
 )
 
@@ -28,9 +29,9 @@ func New(cfg *Config) Memcache {
 
 type Memcache interface {
 	Get(key string, obj interface{}) (err error)
-	Set(key string, v interface{}) (err error)
-	Add(key string, v interface{}) (err error)
-	Replace(key string, v interface{}) (err error)
+	Set(key string, v interface{}, expire ...string) (err error)
+	Add(key string, v interface{}, expire ...string) (err error)
+	Replace(key string, v interface{}, expire ...string) (err error)
 	GetMulti(keys []string) (items map[string]*mc.Item, err error)
 	Touch(key string, seconds int32) (err error)
 	Increment(key string, delta uint64) (newValue uint64, err error)
@@ -45,6 +46,7 @@ type Memcache interface {
 type memcache struct {
 	client      *mc.Client
 	cacheExpire int32
+	sync.Mutex
 }
 
 func (m *memcache) decode(item *mc.Item, v interface{}) (err error) {
@@ -84,30 +86,72 @@ func (m *memcache) Get(key string, obj interface{}) (err error) {
 	return
 }
 
-func (m *memcache) Set(key string, v interface{}) (err error) {
+func (m *memcache) Set(key string, v interface{}, expire ...string) (err error) {
+	m.Lock()
+	defer m.Unlock()
+	before := m.cacheExpire
+	if len(expire) > 0 {
+		temp, err := time.ParseDuration(expire[0])
+		if err != nil {
+			return err
+		}
+		m.cacheExpire = int32(temp)
+	}
 	value, err := m.encode(v)
 	if err != nil {
 		return
 	}
 	err = m.client.Set(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
+	if err != nil {
+		return
+	}
+	m.cacheExpire = before
 	return
 }
 
-func (m *memcache) Add(key string, v interface{}) (err error) {
+func (m *memcache) Add(key string, v interface{}, expire ...string) (err error) {
+	m.Lock()
+	defer m.Unlock()
+	before := m.cacheExpire
+	if len(expire) > 0 {
+		temp, err := time.ParseDuration(expire[0])
+		if err != nil {
+			return err
+		}
+		m.cacheExpire = int32(temp)
+	}
 	value, err := m.encode(v)
 	if err != nil {
 		return
 	}
 	err = m.client.Add(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
+	if err != nil {
+		return
+	}
+	m.cacheExpire = before
 	return
 }
 
-func (m *memcache) Replace(key string, v interface{}) (err error) {
+func (m *memcache) Replace(key string, v interface{}, expire ...string) (err error) {
+	m.Lock()
+	defer m.Unlock()
+	before := m.cacheExpire
+	if len(expire) > 0 {
+		temp, err := time.ParseDuration(expire[0])
+		if err != nil {
+			return err
+		}
+		m.cacheExpire = int32(temp)
+	}
 	value, err := m.encode(v)
 	if err != nil {
 		return
 	}
 	err = m.client.Replace(&mc.Item{Key: key, Value: value, Expiration: m.cacheExpire})
+	if err != nil {
+		return
+	}
+	m.cacheExpire = before
 	return
 }
 
