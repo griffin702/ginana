@@ -1,17 +1,18 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	glog "github.com/griffin702/ginana/library/log"
 	xtime "github.com/griffin702/ginana/library/time"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 	"log"
-	"strings"
 	"time"
 )
 
-// Config mysql config.
 type SQLConfig struct {
 	Driver      string
 	DbUser      string
@@ -22,6 +23,7 @@ type SQLConfig struct {
 	Params      string
 	DbPrev      string
 	Debug       bool
+	LogLevel    logger.LogLevel
 	Active      int
 	Idle        int
 	IdleTimeout xtime.Duration
@@ -29,8 +31,8 @@ type SQLConfig struct {
 
 type ormLog struct{}
 
-func (l ormLog) Print(v ...interface{}) {
-	glog.Debugf(strings.Repeat("%v\n", len(v)), v...)
+func (l ormLog) Printf(format string, args ...interface{}) {
+	glog.Debugf(format, args...)
 }
 
 // NewMySQL new db and retry connection when has error.
@@ -39,53 +41,42 @@ func NewMySQL(c *SQLConfig, noDBName ...bool) (db *gorm.DB, err error) {
 		c.DbName = ""
 	}
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", c.DbUser, c.DbPwd, c.DbHost, c.DbPort, c.DbName, c.Params)
-	db, err = gorm.Open(c.Driver, dsn)
+	dialector := mysql.New(mysql.Config{
+		DSN:                       dsn,
+		DefaultStringSize:         256,
+		DisableDatetimePrecision:  true,
+		DontSupportRenameIndex:    true,
+		DontSupportRenameColumn:   true,
+		SkipInitializeWithVersion: false,
+	})
+	if c.LogLevel < 1 || c.LogLevel > 4 { // LogLevel 默认为Info
+		c.LogLevel = 2
+	}
+	db, err = gorm.Open(dialector, &gorm.Config{
+		Logger: logger.New(ormLog{}, logger.Config{
+			SlowThreshold: time.Second,
+			LogLevel:      c.LogLevel,
+		}),
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   c.DbPrev,
+			SingularTable: true,
+		},
+	})
 	if err != nil {
 		log.Printf("db dsn(%s) error: %v", dsn, err)
 		return
 	}
-	if c.DbPrev != "" {
-		gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-			return c.DbPrev + defaultTableName
-		}
-		db.SingularTable(true)
+	var sqlDB *sql.DB
+	sqlDB, err = db.DB()
+	if err != nil {
+		log.Printf("sqlDB error: %v", err)
+		return
 	}
-	db.DB().SetMaxIdleConns(c.Idle)
-	db.DB().SetMaxOpenConns(c.Active)
-	db.DB().SetConnMaxLifetime(time.Duration(c.IdleTimeout) / time.Second)
-	if glog.GetLogger() != nil {
-		db.SetLogger(ormLog{})
-	}
+	sqlDB.SetMaxIdleConns(c.Idle)
+	sqlDB.SetMaxOpenConns(c.Active)
+	sqlDB.SetConnMaxLifetime(time.Duration(time.Duration(c.IdleTimeout).Seconds()))
 	if c.Debug {
 		db = db.Debug()
 	}
-	// 创建和更新时间钩子
-	//db.Callback().Create().Replace("gorm:update_time_stamp",updateTimeStampForCreateCallback)
-	//db.Callback().Update().Replace("gorm:update_time_stamp",updateTimeStampForUpdateCallback)
 	return
-}
-
-// updateTimeStampForCreateCallback will set `CreatedAt`, `UpdatedAt` when creating
-func updateTimeStampForCreateCallback(scope *gorm.Scope) {
-	if !scope.HasError() {
-		nowTime := time.Now().Unix()
-
-		if createdAtField, ok := scope.FieldByName("CreatedAt"); ok {
-			if createdAtField.IsBlank {
-				_ = createdAtField.Set(nowTime)
-			}
-		}
-
-		if updatedAtField, ok := scope.FieldByName("UpdatedAt"); ok {
-			if updatedAtField.IsBlank {
-				_ = updatedAtField.Set(nowTime)
-			}
-		}
-	}
-}
-
-func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
-	if _, ok := scope.Get("gorm:update_column"); !ok {
-		_ = scope.SetColumn("UpdatedAt", time.Now().Unix())
-	}
 }
