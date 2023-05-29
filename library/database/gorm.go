@@ -32,7 +32,11 @@ type SQLConfig struct {
 type ormLog struct{}
 
 func (l ormLog) Printf(format string, args ...interface{}) {
-	glog.Debugf(format, args...)
+	if glog.GetLogger() != nil {
+		glog.Debugf(format, args...)
+	} else {
+		log.Printf(format, args...)
+	}
 }
 
 // NewMySQL new db and retry connection when has error.
